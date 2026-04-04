@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --solara-primary: #0a3d62;
+  --solara-accent1: #e55039;
+  --solara-accent2: #78e08f;
+  --solara-border: #82ccdd;
+  --solara-bg: #ced6e0;
+  --solara-text-dark: #57606f;
+  --solara-text-light: #f1f2f6;
+  --solara-radius: 7px;
+}
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background-color: var(--solara-bg);
+  color: var(--solara-text-dark);
+}
+
+.solara-header-sidebar {
+  background-color: var(--solara-primary);
+}
+
+.solara-card {
+  background-color: var(--solara-text-light);
+  border: 2px solid var(--solara-border);
+  border-radius: var(--solara-radius);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.solara-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.solara-button-primary {
+  background-color: var(--solara-accent1);
+  color: white;
+  border-radius: var(--solara-radius);
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.solara-button-primary:hover {
+  filter: brightness(1.1);
+}
+
+.solara-button-secondary {
+  background-color: var(--solara-accent2);
+  color: white;
+  border-radius: var(--solara-radius);
+  border: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.solara-button-secondary:hover {
+  filter: brightness(1.1);
+}
+
+.solara-input {
+  background-color: white;
+  border: 2px solid var(--solara-border);
+  border-radius: var(--solara-radius);
+  padding: 0.5rem 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.solara-input:focus {
+  border-color: var(--solara-primary);
+}
+
+/* Kanban specific styles */
+.kanban-column {
+  min-width: 300px;
+  background-color: rgba(255, 255, 255, 0.3);
+  border-radius: var(--solara-radius);
+  padding: 1rem;
+}
+
+.kanban-card {
+  margin-bottom: 1rem;
+}
