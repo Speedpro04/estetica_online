@@ -1,9 +1,7 @@
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Sun, X, Send, RotateCcw, Sparkles } from 'lucide-react';
-import { askSolara } from '../geminiService';
 import { useAxosStore } from '../store';
-import { mockAppointments } from '../mockData';
+import toast from 'react-hot-toast';
 
 interface SolaraAssistantProps {
   isOpen: boolean;
@@ -11,33 +9,15 @@ interface SolaraAssistantProps {
   context?: any;
 }
 
-const SolaraAssistant: React.FC<SolaraAssistantProps> = ({ isOpen, onClose, context: appHeaderContext }) => {
-  const { patients } = useAxosStore();
+const SolaraAssistant: React.FC<SolaraAssistantProps> = ({ isOpen, onClose }) => {
+  const { currentUser } = useAxosStore();
   
-  const solaraContext = {
-    ...appHeaderContext,
-    patients: patients.map(p => ({ 
-      name: p.name, 
-      status: p.status, 
-      isUrgent: p.isUrgent, 
-      insurance: p.insurance 
-    })),
-    appointments: mockAppointments,
-    billing: {
-      totalDaily: "R$ 4.250,00",
-      averageTicket: "R$ 600,00",
-      pendingPayments: 3
-    },
-    today: new Date().toLocaleDateString('pt-BR'),
-    workingHours: "08:00 às 18:00"
-  };
+  const userName = currentUser?.name || 'Administrador';
 
-  const initialContent = `Olá. Sou Solara, sua assistente de suporte à gestão.
-
-Estou à disposição para processar solicitações sobre a agenda, faturamento ou status operacional da clínica. Como posso ser útil?`;
+  const initialContent = `Olá, sou Solara, sua assistente Inteligente. Como posso ajudar com a gestão da clínica hoje?`;
 
   const [messages, setMessages] = useState<{role: 'user' | 'model', text: string}[]>(() => {
-    const saved = sessionStorage.getItem('solara-balanced-chat-v1');
+    const saved = sessionStorage.getItem('solara-balanced-chat-v2');
     return saved ? JSON.parse(saved) : [{ role: 'model', text: initialContent }];
   });
   
@@ -52,7 +32,7 @@ Estou à disposição para processar solicitações sobre a agenda, faturamento 
     if (messages.length > 20) {
       setMessages(prev => prev.slice(-20));
     }
-    sessionStorage.setItem('solara-balanced-chat-v1', JSON.stringify(messages));
+    sessionStorage.setItem('solara-balanced-chat-v2', JSON.stringify(messages));
   }, [messages]);
 
   const handleSend = async () => {
@@ -64,27 +44,41 @@ Estou à disposição para processar solicitações sobre a agenda, faturamento 
     setMessages(newMessages);
     setIsLoading(true);
 
-    const response = await askSolara(userMsg, newMessages.slice(-20), solaraContext);
-    
-    setMessages(prev => [...prev, { role: 'model' as const, text: response }]);
-    setIsLoading(false);
+    try {
+      const response = await fetch('http://localhost:8000/api/v1/chat/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${currentUser?.token}`
+        },
+        body: JSON.stringify({ message: userMsg })
+      });
+      
+      if (!response.ok) throw new Error('Erro ao se comunicar com o servidor');
+      
+      const data = await response.json();
+      setMessages(prev => [...prev, { role: 'model' as const, text: data.response }]);
+    } catch(err) {
+      toast.error("Erro na comunicação com a IA.");
+      setMessages(prev => [...prev, { role: 'model' as const, text: `Desculpe ${userName}, ocorreu um erro de conexão com o servidor. Tente novamente mais tarde.` }]);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const resetChat = () => {
     setMessages([{ role: 'model', text: initialContent }]);
-    sessionStorage.removeItem('solara-balanced-chat-v1');
+    sessionStorage.removeItem('solara-balanced-chat-v2');
   };
 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-y-0 right-0 w-full max-w-md bg-white shadow-[0_0_50px_rgba(0,0,0,0.1)] z-[10000] flex flex-col animate-in slide-in-from-right duration-500 border-l border-slate-100 font-inter">
+    <div className="fixed bottom-6 right-6 w-[400px] h-[600px] bg-white shadow-2xl rounded-3xl overflow-hidden z-[10000] flex flex-col animate-in zoom-in-95 duration-300 border border-slate-200 font-inter">
       {/* Header */}
-      <div className="p-8 bg-[#1e293b] text-white flex justify-between items-center border-b border-white/5 shadow-xl relative overflow-hidden">
+      <div className="p-8 bg-[#0a3d62] text-white flex justify-between items-center border-b border-white/5 shadow-xl relative overflow-hidden">
         <div className="flex items-center gap-4 relative z-10">
-          <div className="w-12 h-12 bg-[#FF9500] rounded-2xl flex items-center justify-center shadow-lg">
-            <Sun size={28} className="fill-white" />
-          </div>
+          <img src="/sol_com_risco_em_baixo-removebg-preview.png" alt="Solara Logo" style={{ width: 60, height: 60, objectFit: 'contain' }} />
           <div>
             <h3 className="font-bold text-lg leading-tight tracking-tight uppercase">Solara</h3>
             <div className="flex items-center gap-2 mt-1">

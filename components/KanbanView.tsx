@@ -131,7 +131,7 @@ const KanbanView: React.FC<KanbanViewProps> = ({ patients, onUpdateStatus, onOpe
                         </div>
                       </div>
 
-                      <h4 className="font-black text-solara-primary text-base mb-1 tracking-tighter uppercase leading-tight group-hover:text-solara-accent1 transition-colors">{patient.name}</h4>
+                      <h4 className="font-light text-solara-primary text-base mb-1 tracking-tighter uppercase leading-tight group-hover:text-solara-accent1 transition-colors">{patient.name}</h4>
                       <p className="text-[10px] font-bold text-solara-text1 uppercase tracking-widest mb-4 flex items-center gap-1.5">
                         <Activity size={12} className="text-solara-accent2" />
                         {patient.specialty || 'Procedimento Geral'}

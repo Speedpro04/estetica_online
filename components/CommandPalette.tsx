@@ -77,7 +77,7 @@ export const CommandPalette: React.FC<CommandPaletteProps> = ({
                     {patient.name.charAt(0)}
                   </div>
                   <div className="flex-1">
-                    <p className="font-semibold text-slate-800 group-hover:text-[#00A3FF]">{patient.name}</p>
+                    <p className="font-light text-slate-800 group-hover:text-[#00A3FF]">{patient.name}</p>
                     <p className="text-xs text-slate-400 font-medium">{patient.cpf} • {patient.insurance}</p>
                   </div>
                   {patient.isUrgent && (

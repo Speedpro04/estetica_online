@@ -38,7 +38,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ patients, appointments, o
   };
 
   return (
-    <div className="space-y-8 animate-in fade-in duration-500 font-montserrat">
+    <div className="space-y-8 animate-in fade-in duration-500 font-inter">
       <AIReportModal 
         isOpen={isReportOpen} 
         onClose={() => setIsReportOpen(false)} 
@@ -47,8 +47,8 @@ const DashboardView: React.FC<DashboardViewProps> = ({ patients, appointments, o
 
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-black text-solara-primary tracking-tighter uppercase leading-none">Dashboard Operacional</h1>
-          <p className="text-solara-text1 text-[10px] font-bold uppercase tracking-[0.2em] mt-2">Solara Connect • Gestão Inteligente</p>
+          <h1 className="text-4xl font-light text-solara-primary tracking-tighter uppercase leading-none">Dashboard Operacional</h1>
+          <p className="text-solara-text1 text-sm font-light uppercase tracking-[0.2em] mt-3">Solara Connect • Gestão Inteligente</p>
         </div>
         <div className="bg-white solara-border px-4 py-2 flex items-center gap-3 shadow-md">
           <Layers size={14} className="text-solara-accent2" />
@@ -66,14 +66,14 @@ const DashboardView: React.FC<DashboardViewProps> = ({ patients, appointments, o
           { label: 'Mensagens WhatsApp', val: '142', icon: MessageSquare, color: 'text-solara-accent1', bg: 'bg-solara-accent1/10' },
         ].map((stat, i) => (
           <div key={i} className="solara-card p-6 animate-stagger-item" style={{ animationDelay: `${i * 100}ms` }}>
-            <div className="flex justify-between items-start mb-5">
-              <div className={`${stat.bg} p-2.5 rounded-solara ${stat.color} transition-transform hover:rotate-6`}>
-                <stat.icon size={22} />
+            <div className="flex justify-between items-start mb-6">
+              <div className={`${stat.bg} p-3 rounded-solara ${stat.color} transition-transform hover:rotate-6`}>
+                <stat.icon size={24} />
               </div>
-              <span className="text-solara-accent2 text-[9px] font-black bg-solara-accent2/10 px-2.5 py-1 rounded-solara border-2 border-solara-accent2/20 uppercase tracking-tighter">Live</span>
+              <span className="text-solara-accent2 text-[10px] font-light bg-solara-accent2/10 px-3 py-1 rounded-solara border border-solara-accent2/20 uppercase tracking-tighter">Live</span>
             </div>
-            <p className="text-solara-text1 text-[10px] font-bold uppercase tracking-[0.2em] mb-1">{stat.label}</p>
-            <h3 className="text-2xl font-black text-solara-primary tracking-tighter">{stat.val}</h3>
+            <p className="text-solara-text1 text-[11px] font-light uppercase tracking-[0.2em] mb-2">{stat.label}</p>
+            <h3 className="text-3xl font-light text-solara-primary tracking-tighter">{stat.val}</h3>
           </div>
         ))}
       </div>
@@ -82,10 +82,10 @@ const DashboardView: React.FC<DashboardViewProps> = ({ patients, appointments, o
         {/* Gráfico principal */}
         <div className="lg:col-span-2 bg-white solara-card p-8 animate-stagger-item" style={{ animationDelay: '400ms' }}>
           <div className="flex justify-between items-center mb-10">
-            <h3 className="font-black text-solara-primary text-xs uppercase tracking-[0.2em]">Fluxo de Atendimentos</h3>
-            <div className="bg-solara-bg/30 p-1 rounded-solara flex gap-1 border-2 border-solara-border/20">
-              <button className="px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest rounded-solara bg-white shadow-md text-solara-primary">Semanal</button>
-              <button className="px-3 py-1.5 text-[9px] font-bold uppercase tracking-widest text-solara-text1">Mensal</button>
+            <h3 className="font-light text-solara-primary text-sm uppercase tracking-[0.2em]">Fluxo de Atendimentos</h3>
+            <div className="bg-solara-bg/30 p-1.5 rounded-solara flex gap-2 border-2 border-solara-border/20">
+              <button className="px-4 py-2 text-[10px] font-light uppercase tracking-widest rounded-solara bg-white shadow-md text-solara-primary" title="Ver por semana">Semanal</button>
+              <button className="px-4 py-2 text-[10px] font-light uppercase tracking-widest text-solara-text1" title="Ver por mês">Mensal</button>
             </div>
           </div>
           <div className="h-72">
@@ -101,7 +101,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ patients, appointments, o
                 <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fontSize: 10, fill: '#57606f', fontWeight: 800}} />
                 <YAxis hide />
                 <Tooltip 
-                  contentStyle={{ borderRadius: '7px', border: '2px solid #82ccdd', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', fontWeight: 900, fontSize: '12px', fontFamily: 'Montserrat' }}
+                  contentStyle={{ borderRadius: '12px', border: '1px solid #82ccdd', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)', fontWeight: 300, fontSize: '14px', fontFamily: 'Inter' }}
                 />
                 <Area type="monotone" dataKey="v" stroke="#0a3d62" strokeWidth={4} fillOpacity={1} fill="url(#colorValue)" />
               </AreaChart>
@@ -114,18 +114,19 @@ const DashboardView: React.FC<DashboardViewProps> = ({ patients, appointments, o
           <div className="absolute top-[-20%] right-[-20%] w-64 h-64 bg-solara-accent2/10 blur-[100px] rounded-full"></div>
           
           <div className="relative z-10">
-            <div className="bg-white/20 w-12 h-12 rounded-solara flex items-center justify-center backdrop-blur-md border-2 border-white/20 mb-8">
-              <Sun size={24} className="fill-white" />
+            <div className="bg-white/20 w-14 h-14 rounded-solara flex items-center justify-center backdrop-blur-md border border-white/20 mb-10">
+              <Sun size={28} className="fill-white" />
             </div>
-            <h2 className="text-3xl font-black mb-4 tracking-tighter leading-none uppercase italic">Solara IA</h2>
-            <p className="text-solara-text2 font-medium leading-relaxed mb-8 text-sm italic border-l-4 border-solara-accent2 pl-4">
+            <h2 className="text-4xl font-light mb-5 tracking-tighter leading-none uppercase italic">Solara IA</h2>
+            <p className="text-solara-text2 font-light leading-relaxed mb-10 text-base italic border-l-4 border-solara-accent2 pl-5">
               "Detectamos uma alta demanda por consultas de rotatividade para amanhã. Sugerimos priorizar confirmações via WhatsApp."
             </p>
           </div>
 
           <button 
             onClick={() => setIsReportOpen(true)}
-            className="relative z-10 bg-white text-solara-primary px-8 py-4 rounded-solara font-black hover:scale-105 transition-all w-full uppercase tracking-[0.2em] text-[10px] shadow-xl border-2 border-solara-border"
+            className="relative z-10 bg-white text-solara-primary px-8 py-5 rounded-solara font-light hover:scale-[1.02] active:scale-95 transition-all w-full uppercase tracking-[0.2em] text-[11px] shadow-xl border border-solara-border"
+            title="Ver relatório estratégico detalhado"
           >
             Ver Análise Estratégica
           </button>
@@ -133,9 +134,9 @@ const DashboardView: React.FC<DashboardViewProps> = ({ patients, appointments, o
       </div>
 
       <div className="bg-white solara-card overflow-hidden animate-stagger-item" style={{ animationDelay: '600ms' }}>
-          <div className="p-6 border-b-2 border-solara-border/20 flex justify-between items-center bg-solara-bg/10">
-            <h3 className="font-black text-solara-primary uppercase tracking-[0.2em] text-[10px]">Próximos em Fila</h3>
-            <button className="text-solara-accent1 text-[9px] font-black uppercase tracking-widest hover:underline">Gerenciar Fluxo</button>
+          <div className="p-6 border-b border-solara-border/20 flex justify-between items-center bg-solara-bg/10">
+            <h3 className="font-light text-solara-primary uppercase tracking-[0.2em] text-[11px]">Próximos em Fila</h3>
+            <button className="text-solara-accent1 text-[10px] font-light uppercase tracking-widest hover:underline" title="Ir para gerenciamento de fluxo">Gerenciar Fluxo</button>
           </div>
           <div className="divide-y-2 divide-solara-border/10">
             {patients.slice(0, 4).map((p) => {
@@ -148,7 +149,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ patients, appointments, o
                     </div>
                     <div>
                       <div className="flex items-center gap-3">
-                        <p className="text-sm font-black text-solara-primary tracking-tighter group-hover:text-solara-accent1 transition-colors uppercase">{p.name}</p>
+                        <p className="text-sm font-light text-solara-primary tracking-tighter group-hover:text-solara-accent1 transition-colors uppercase">{p.name}</p>
                         {app?.isSpecialHour && (
                           <span className="text-[7px] font-black bg-[#e55039]/10 text-[#e55039] px-2 py-0.5 rounded-full border border-[#e55039]/30 uppercase tracking-widest animate-pulse">Plantão</span>
                         )}

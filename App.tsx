@@ -41,6 +41,9 @@ import SpecialistsView from './components/SpecialistsView';
 import CampanhasView from './components/CampanhasView';
 import { CommandPalette } from './components/CommandPalette';
 import SolaraAssistant from './components/SolaraAssistant';
+import LandingView from './components/LandingView';
+import RegisterView from './components/RegisterView';
+import ForgotPasswordView from './components/ForgotPasswordView';
 import { mockAppointments } from './mockData';
 
 // Módulo de Identificação do Usuário na Sidebar
@@ -56,12 +59,12 @@ const UserAccessModule: React.FC<{ collapsed?: boolean }> = ({ collapsed }) => {
         </div>
         {!collapsed && (
           <div className="flex flex-col overflow-hidden">
-            <span className="text-[11px] font-black text-white uppercase tracking-tight truncate leading-none mb-1">
+            <span className="text-[11px] font-light text-white uppercase tracking-tight truncate leading-none mb-1">
               {currentUser.name}
             </span>
             <div className="flex items-center gap-1.5">
               <ShieldCheck size={10} className="text-[#7ed6df]" />
-              <span className="text-[8px] font-bold text-[#7ed6df] uppercase tracking-[0.15em] whitespace-nowrap">
+              <span className="text-[9px] font-light text-[#7ed6df] uppercase tracking-[0.15em] whitespace-nowrap">
                 SUPER ADMIN
               </span>
             </div>
@@ -95,9 +98,9 @@ const SolaraLogo: React.FC<{ collapsed?: boolean }> = ({ collapsed }) => (
       </div>
       {!collapsed && (
         <div className="flex flex-col ml-1">
-          <span className="text-xl font-black text-white tracking-tighter uppercase leading-none">Assistente</span>
-          <span className="text-xl font-black text-[#f6851e] tracking-tighter uppercase leading-none">Solara</span>
-          <span className="text-[7px] font-bold text-[#82ccdd] uppercase tracking-[0.25em] leading-none mt-1">IA de Recuperação</span>
+          <span className="text-xl font-light text-white tracking-tighter uppercase leading-none">Assistente</span>
+          <span className="text-xl font-light text-[#f6851e] tracking-tighter uppercase leading-none">Solara</span>
+          <span className="text-[8px] font-light text-[#82ccdd] uppercase tracking-[0.25em] leading-none mt-2">IA de Recuperação</span>
         </div>
       )}
     </div>
@@ -123,6 +126,9 @@ const App: React.FC = () => {
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [loginError, setLoginError] = useState('');
+  const [showLanding, setShowLanding] = useState(!currentUser);
+  const [authScreen, setAuthScreen] = useState<'login' | 'register' | 'forgot'>('login');
 
   useEffect(() => {
     const timer = setTimeout(() => setDebouncedQuery(searchQuery), 300);
@@ -146,68 +152,97 @@ const App: React.FC = () => {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (userEmail && password) {
-      setIsLoggingIn(true);
-      try {
-        await login(userEmail, password);
-        setUserEmail('');
-        setPassword('');
-      } catch (err) {
-        // Toast já gerenciado pelo store
-      } finally {
-        setIsLoggingIn(false);
-      }
+    setLoginError('');
+    if (!userEmail.trim()) {
+      setLoginError('Informe seu e-mail ou ID.');
+      return;
+    }
+    if (!password.trim()) {
+      setLoginError('Informe sua senha.');
+      return;
+    }
+    setIsLoggingIn(true);
+    try {
+      await login(userEmail, password);
+      setUserEmail('');
+      setPassword('');
+      setLoginError('');
+    } catch (err) {
+      setLoginError('E-mail ou senha incorretos.');
+    } finally {
+      setIsLoggingIn(false);
     }
   };
+
+  const handleLogout = () => {
+    logout();
+    setShowLanding(true);
+  };
+
+  if (showLanding && !currentUser) {
+    return <LandingView onEnterApp={() => { setShowLanding(false); setAuthScreen('login'); }} />;
+  }
+
+  if (!currentUser && authScreen === 'register') {
+    return <RegisterView onBack={() => setAuthScreen('login')} onSuccess={() => setAuthScreen('login')} />;
+  }
+
+  if (!currentUser && authScreen === 'forgot') {
+    return <ForgotPasswordView onBack={() => setAuthScreen('login')} />;
+  }
 
   if (!currentUser) {
     return (
       <div className="min-h-screen premium-gradient flex items-center justify-center p-6 font-inter relative">
         <Toaster position="top-right" />
         {/* Botão voltar à landing */}
-        <a
-          href="/"
+        <button
+          onClick={() => setShowLanding(true)}
           className="absolute top-6 left-6 flex items-center gap-2 text-white/50 hover:text-white text-[10px] font-bold uppercase tracking-widest transition-all group"
         >
           <span className="group-hover:-translate-x-1 transition-transform">←</span>
           Voltar ao início
-        </a>
+        </button>
         <div className="w-full max-w-[440px] bg-white/5 backdrop-blur-2xl rounded-[40px] border border-white/10 p-12 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.5)] animate-in zoom-in-95 duration-500">
           <div className="flex justify-center mb-12">
             <SolaraLogo />
           </div>
           
-          <div className="text-center mb-10">
-            <h1 className="text-white text-3xl font-black tracking-tight mb-3 uppercase">Assistente Solara</h1>
-            <p className="text-[#82ccdd] text-[10px] font-bold uppercase tracking-[0.3em]">Gestão Inteligente para Clínicas</p>
+          <div className="text-center mb-12">
+            <h1 className="text-white text-4xl font-light tracking-tight mb-4 uppercase leading-none">Assistente Solara</h1>
+            <p className="text-[#82ccdd] text-xs font-light uppercase tracking-[0.3em]">Gestão Inteligente para Clínicas</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-5">
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Usuário</label>
+            <div className="space-y-3">
+              <label htmlFor="login-email" className="text-[11px] font-light text-slate-500 uppercase tracking-widest ml-1">Usuário</label>
               <div className="relative group">
-                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#7ed6df] transition-colors" size={18} />
+                <Mail className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#7ed6df] transition-colors" size={20} />
                 <input 
+                  id="login-email"
                   type="text"
                   placeholder="E-mail ou ID"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-14 pr-6 text-white text-sm focus:border-[#7ed6df]/50 focus:bg-white/10 outline-none transition-all placeholder:text-slate-600 font-medium"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-15 pr-6 text-white text-base focus:border-[#7ed6df]/50 focus:bg-white/10 outline-none transition-all placeholder:text-slate-600 font-light"
                   value={userEmail}
                   onChange={(e) => setUserEmail(e.target.value)}
                   autoFocus
+                  title="Seu e-mail ou identificação"
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-[10px] font-bold text-slate-500 uppercase tracking-widest ml-1">Senha</label>
+            <div className="space-y-3">
+              <label htmlFor="login-password" className="text-[11px] font-light text-slate-500 uppercase tracking-widest ml-1">Senha</label>
               <div className="relative group">
-                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#7ed6df] transition-colors" size={18} />
+                <Lock className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-[#7ed6df] transition-colors" size={20} />
                 <input 
+                  id="login-password"
                   type={showPassword ? 'text' : 'password'}
                   placeholder="••••••••"
-                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-4 pl-14 pr-14 text-white text-sm focus:border-[#7ed6df]/50 focus:bg-white/10 outline-none transition-all placeholder:text-slate-600 font-medium tracking-widest"
+                  className="w-full bg-white/5 border border-white/10 rounded-2xl py-5 pl-15 pr-15 text-white text-base focus:border-[#7ed6df]/50 focus:bg-white/10 outline-none transition-all placeholder:text-slate-600 font-light tracking-widest"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  title="Sua senha de acesso"
                 />
                 <button 
                   type="button"
@@ -219,13 +254,35 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            <div className="pt-4">
+            <div className="pt-4 space-y-3">
+              {loginError && (
+                <div className="bg-red-500/10 border border-red-500/30 rounded-2xl px-5 py-3 text-red-400 text-xs font-bold uppercase tracking-widest text-center">
+                  {loginError}
+                </div>
+              )}
               <button 
                 type="submit"
                 disabled={isLoggingIn}
-                className="w-full py-5 bg-[#7ed6df] text-[#0f172a] rounded-[20px] font-black uppercase tracking-[0.2em] text-xs shadow-[0_20px_40px_-10px_rgba(126,214,223,0.3)] hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                className="w-full py-6 bg-[#7ed6df] text-[#0f172a] rounded-[24px] font-light uppercase tracking-[0.2em] text-xs shadow-[0_20px_40px_-10px_rgba(126,214,223,0.3)] hover:brightness-110 active:scale-[0.98] transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                title="Entrar no dashboard"
               >
                 {isLoggingIn ? 'Autenticando...' : 'Entrar no Sistema'}
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setAuthScreen('register')}
+                className="w-full py-5 bg-white/5 border border-white/10 text-white/70 rounded-[24px] font-light uppercase tracking-[0.2em] text-xs hover:bg-white/10 hover:text-white transition-all"
+              >
+                Criar Conta
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setAuthScreen('forgot')}
+                className="w-full text-center text-[10px] text-[#82ccdd] font-light uppercase tracking-widest hover:text-white transition-colors pt-2"
+              >
+                Esqueci minha senha
               </button>
 
             </div>
@@ -289,8 +346,8 @@ const App: React.FC = () => {
       case 'ai-assistant': return (
         <div className="flex flex-col items-center justify-center p-20 bg-white solara-card shadow-lg animate-in fade-in zoom-in duration-500">
           <Sparkles size={80} className="text-[#ff7675] mb-6 opacity-40" />
-          <h2 className="text-2xl font-black text-[#0a3d62] uppercase tracking-tighter mb-4">Assistente IA</h2>
-          <p className="text-slate-500 text-center max-w-md font-medium uppercase text-[10px] tracking-widest leading-loose">
+          <h2 className="text-3xl font-light text-[#0a3d62] uppercase tracking-tighter mb-4">Assistente IA</h2>
+          <p className="text-slate-500 text-center max-w-md font-light uppercase text-xs tracking-widest leading-loose">
             Configurações e logs do assistente de inteligência preditiva.
           </p>
         </div>
@@ -341,14 +398,15 @@ const App: React.FC = () => {
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id as any)}
-              className={`w-full flex items-center gap-4 p-4 rounded-solara transition-all duration-300 group ${
+              className={`w-full flex items-center gap-5 p-5 rounded-solara transition-all duration-300 group ${
                 activeTab === item.id 
-                  ? 'bg-[#ff7675] shadow-lg font-black' 
-                  : 'text-white/60 hover:text-white hover:bg-white/5'
+                  ? 'bg-[#ff7675] shadow-lg font-light' 
+                  : 'text-white/60 hover:text-white hover:bg-white/5 font-light'
               }`}
+              title={item.label}
             >
-              <item.icon size={20} className={activeTab === item.id ? 'text-white' : 'text-white/40 group-hover:text-[#ff7675]'} />
-              {isSidebarOpen && <span className="text-[10px] uppercase tracking-[0.2em] leading-none truncate font-bold">{item.label}</span>}
+              <item.icon size={22} className={activeTab === item.id ? 'text-white' : 'text-white/40 group-hover:text-[#ff7675]'} />
+              {isSidebarOpen && <span className="text-[11px] uppercase tracking-[0.2em] leading-none truncate">{item.label}</span>}
             </button>
           ))}
           <div className="flex-1 min-h-[40px]"></div>
@@ -358,10 +416,11 @@ const App: React.FC = () => {
           <UserAccessModule collapsed={!isSidebarOpen} />
           <div className="px-5">
             <button 
-              onClick={logout}
-              className={`w-full flex items-center gap-4 p-4 text-white/40 hover:text-[#e55039] transition-all font-bold uppercase text-[9px] tracking-widest group ${!isSidebarOpen ? 'justify-center' : ''}`}
+              onClick={handleLogout}
+              className={`w-full flex items-center gap-5 p-5 text-white/40 hover:text-[#e55039] transition-all font-light uppercase text-[10px] tracking-widest group ${!isSidebarOpen ? 'justify-center' : ''}`}
+              title="Encerrar Sessão"
             >
-              <LogOut size={20} />
+              <LogOut size={22} />
               {isSidebarOpen && <span>Encerrar Sessão</span>}
             </button>
           </div>
@@ -387,7 +446,7 @@ const App: React.FC = () => {
           </div>
 
           <div className="absolute left-1/2 -translate-x-1/2 flex items-center justify-center">
-            <h1 className="text-2xl font-black text-white tracking-[0.3em] uppercase italic">Assistente Solara</h1>
+            <h1 className="text-3xl font-light text-white tracking-[0.3em] uppercase italic">Assistente Solara</h1>
           </div>
 
           <div className="flex items-center justify-end gap-6 w-1/3">

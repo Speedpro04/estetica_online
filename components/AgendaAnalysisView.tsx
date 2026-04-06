@@ -96,7 +96,7 @@ const AgendaAnalysisView: React.FC = () => {
                    </span>
                 </div>
                 
-                <h4 className="text-[11px] font-black text-[#0a3d62] italic mb-1">{s.patient}</h4>
+                <h4 className="text-[11px] font-light text-[#0a3d62] italic mb-1">{s.patient}</h4>
                 <p className="text-[10px] text-slate-500 leading-relaxed mb-4">{s.reason}</p>
                 
                 <div className="flex items-center justify-between pt-4 border-t border-slate-50">

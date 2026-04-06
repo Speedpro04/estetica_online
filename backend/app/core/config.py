@@ -4,30 +4,30 @@ from typing import Optional
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Assistente Solara API"
-    VERSION: str = "1.0.0"
+    VERSION: str = "2.0.0"
     API_V1_STR: str = "/api/v1"
     
-    # POSTGRES
-    POSTGRES_SERVER: str = "localhost"
-    POSTGRES_USER: str = "postgres"
-    POSTGRES_PASSWORD: str = "password"
-    POSTGRES_DB: str = "solara_db"
-    SQLALCHEMY_DATABASE_URL: Optional[str] = None
+    # SUPABASE
+    SUPABASE_URL: str = ""
+    SUPABASE_ANON_KEY: str = ""
+    SUPABASE_SERVICE_KEY: str = ""
 
     # REDIS
     REDIS_HOST: str = "localhost"
     REDIS_PORT: int = 6379
 
     # SECURITY
-    SECRET_KEY: str = "SECRET_KEY_ALTAMENTE_SEGURA_AQUI_DEVE_SER_ENV"
+    SECRET_KEY: str = "SECRET_KEY_ALTAMENTE_SEGURA"
     ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 7  # 7 dias
 
-    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
+    # GEMINI
+    GEMINI_API_KEY: str = ""
 
-    def get_database_url(self):
-        if self.SQLALCHEMY_DATABASE_URL:
-            return self.SQLALCHEMY_DATABASE_URL
-        return f"postgresql://{self.POSTGRES_USER}:{self.POSTGRES_PASSWORD}@{self.POSTGRES_SERVER}/{self.POSTGRES_DB}"
+    # PAGBANK
+    PAGBANK_TOKEN: str = ""
+    PAGBANK_API_URL: str = "https://api.pagseguro.com"
+
+    model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
 
 settings = Settings()

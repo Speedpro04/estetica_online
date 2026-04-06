@@ -143,7 +143,7 @@ const PatientDetailView: React.FC<PatientDetailViewProps> = ({ patient, onBack, 
               <div className="w-20 h-20 bg-white/10 rounded-2xl mx-auto mb-4 flex items-center justify-center text-4xl font-bold text-white backdrop-blur-md border border-white/20">
                 {patient.name.charAt(0)}
               </div>
-              <h2 className="text-xl font-semibold text-white tracking-tight">{patient.name}</h2>
+              <h2 className="text-xl font-light text-white tracking-tight">{patient.name}</h2>
               <p className="text-[#7ed6df] text-[10px] mt-1 font-bold uppercase tracking-widest">{patient.cpf}</p>
             </div>
             <div className="p-6 space-y-6">
@@ -206,17 +206,17 @@ const PatientDetailView: React.FC<PatientDetailViewProps> = ({ patient, onBack, 
           {activeTab === 'records' && (
             <div className="space-y-8 animate-in fade-in slide-in-from-bottom-2">
               {/* Card de Triagem Solara - Agora com cor Laranja Original */}
-              <div className="bg-[#FF9500] p-8 rounded-2xl shadow-xl relative overflow-hidden border border-white/10 solara-card">
+              <div className="bg-gradient-to-br from-[#FF9500] to-[#E65C00] p-8 rounded-2xl shadow-2xl relative overflow-hidden border border-white/20 solara-card">
                 <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 blur-[60px] rounded-full"></div>
                 
                 <div className="flex items-center justify-between mb-6 relative z-10">
                   <div className="flex items-center gap-3">
-                    <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center shadow-lg">
-                      <Sun size={22} className="text-[#FF9500] fill-[#FF9500]" />
+                    <div className="w-14 h-14 bg-white rounded-xl flex items-center justify-center shadow-lg">
+                      <Sun size={26} className="text-[#FF9500] fill-[#FF9500]" />
                     </div>
                     <div>
-                      <h3 className="font-black text-white tracking-tight text-base uppercase">Triagem Solara</h3>
-                      <p className="text-white/80 text-[9px] font-bold uppercase tracking-widest">Diagnóstico por Inteligência Nativa</p>
+                      <h3 className="font-black text-white tracking-tight text-xl uppercase drop-shadow-sm">Triagem Solara</h3>
+                      <p className="text-white/95 text-xs font-black uppercase tracking-widest mt-1">Diagnóstico por Inteligência Nativa</p>
                     </div>
                   </div>
                   {isProcessing && <AILoadingIndicator message="Solara Analisando..." variant="compact" />}
@@ -224,7 +224,7 @@ const PatientDetailView: React.FC<PatientDetailViewProps> = ({ patient, onBack, 
 
                 <div className="flex flex-col gap-4 relative z-10">
                   <textarea 
-                    className="w-full h-28 p-5 bg-white/10 border border-white/20 rounded-xl outline-none focus:border-white focus:bg-white/20 text-white transition-all font-medium text-sm placeholder:text-white/40 resize-none focus:shadow-lg"
+                    className="w-full h-32 p-6 bg-black/10 border border-white/30 rounded-xl outline-none focus:border-white focus:bg-black/20 text-white transition-all font-bold text-base placeholder:text-white/70 resize-none shadow-inner"
                     placeholder="Descreva os sintomas do paciente para análise imediata..."
                     value={symptoms}
                     onChange={handleSymptomsChange}
@@ -233,13 +233,13 @@ const PatientDetailView: React.FC<PatientDetailViewProps> = ({ patient, onBack, 
                   <div className="flex items-center justify-between">
                     <div className="flex-1 mr-6 flex items-center gap-4">
                       {draftSaved && (
-                        <div className="text-[10px] text-white/60 flex items-center gap-1.5 animate-in fade-in">
-                          <CheckCircle2 className="w-3 h-3" />
+                        <div className="text-xs font-bold text-white/90 flex items-center gap-1.5 animate-in fade-in">
+                          <CheckCircle2 className="w-4 h-4" />
                           Salvo
                         </div>
                       )}
                       {aiInsight && (
-                        <div className="text-[10px] text-white font-black italic border-l-2 border-white/50 pl-4 py-0.5 animate-in fade-in uppercase tracking-wider leading-tight">
+                        <div className="text-xs text-white font-black italic border-l-4 border-white/70 pl-4 py-1 animate-in fade-in uppercase tracking-wider leading-relaxed">
                           ☀️ Insight: {aiInsight}
                         </div>
                       )}
@@ -247,9 +247,9 @@ const PatientDetailView: React.FC<PatientDetailViewProps> = ({ patient, onBack, 
                     <button 
                       onClick={handleSymptomAnalysis}
                       disabled={isProcessing || !symptoms}
-                      className="bg-white text-[#FF9500] px-6 py-3.5 rounded-xl font-black flex items-center gap-2 hover:bg-slate-50 transition-all disabled:opacity-30 text-[10px] uppercase tracking-[0.15em] shadow-lg"
+                      className="bg-white text-[#E65C00] px-8 py-4 rounded-xl font-black flex items-center gap-3 hover:bg-slate-50 transition-all disabled:opacity-50 text-xs uppercase tracking-widest shadow-xl"
                     >
-                      {isProcessing ? <Loader2 className="animate-spin" size={16} /> : <Sun size={16} className="fill-[#FF9500]" />}
+                      {isProcessing ? <Loader2 className="animate-spin" size={18} /> : <Sun size={18} className="fill-[#E65C00]" />}
                       Executar Triagem
                     </button>
                   </div>

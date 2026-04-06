@@ -52,7 +52,7 @@ export const useAxosStore = create<AxosState>()(
         selectedPatientId: null,
         isLoading: false,
         syncStatus: 'idle',
-        currentUser: { name: 'Henrique', role: 'Administrador', lastAccess: new Date().toISOString() },
+        currentUser: null,
 
         setSidebarOpen: (open) => set({ isSidebarOpen: open }),
         setActiveTab: (tab) => set({ activeTab: tab, selectedPatientId: null }),
@@ -89,7 +89,20 @@ export const useAxosStore = create<AxosState>()(
               isLoading: false
             });
             toast.success('Login realizado com sucesso!');
-          } catch (error) {
+          } catch (error: any) {
+            // Modo demo: se backend está offline, permite login local
+            if (error?.message === 'Failed to fetch' || error?.name === 'TypeError') {
+              set({ 
+                currentUser: { 
+                  name: email.split('@')[0].toUpperCase() || 'ADMIN', 
+                  role: 'Super Admin (Demo)', 
+                  lastAccess: new Date().toISOString()
+                },
+                isLoading: false
+              });
+              toast.success('Login em modo demonstração (backend offline)');
+              return;
+            }
             set({ isLoading: false });
             toast.error('Acesso negado: Verifique seu login/senha.');
             throw error;
