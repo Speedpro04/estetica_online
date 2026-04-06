@@ -1,11 +1,11 @@
 """
 Motor de Inteligência de Pacientes — Assistente Solara
 Calcula o Score de Risco e gera sugestões automáticas de ação para recuperação.
+Versão Supabase.
 """
 
 from datetime import datetime, timedelta, timezone
-from sqlalchemy.orm import Session
-from app.models.patient import Patient
+from app.core.supabase_client import supabase
 
 
 # ──────────────────────────────────────────────
@@ -19,16 +19,16 @@ REGRAS_RISCO = {
 }
 
 
-def calcular_score_risco(last_visit: datetime | None) -> str:
+def calcular_score_risco(last_visit: str | datetime | None) -> str:
     """
     Calcula o score de risco de abandono com base na última visita.
-    - CRITICO: > 90 dias de ausência
-    - ALTO:    60–90 dias de ausência
-    - MEDIO:   30–60 dias de ausência
-    - BAIXO:   < 30 dias ou ativo
     """
     if last_visit is None:
-        return "CRITICO"  # Paciente nunca veio → risco máximo
+        return "CRITICO"
+
+    if isinstance(last_visit, str):
+        # Supabase retorna ISO strings
+        last_visit = datetime.fromisoformat(last_visit.replace('Z', '+00:00'))
 
     agora = datetime.now(timezone.utc)
     if last_visit.tzinfo is None:
@@ -47,9 +47,7 @@ def calcular_score_risco(last_visit: datetime | None) -> str:
 
 
 def gerar_sugestao_acao(score: str, status: str) -> str:
-    """
-    Gera uma sugestão de ação personalizada com base no score e status do paciente.
-    """
+    """Gera uma sugestão de ação personalizada."""
     sugestoes = {
         "CRITICO": {
             "inativo":      "Enviar convite urgente com desconto exclusivo de retorno",
@@ -59,7 +57,7 @@ def gerar_sugestao_acao(score: str, status: str) -> str:
         "ALTO": {
             "inativo":      "Campanha de limpeza preventiva — alta taxa de conversão",
             "em_recuperacao": "Reforçar contato com segundo convite personalizado",
-            "default":      "Contatarpor WhatsApp mencionando o último procedimento",
+            "default":      "Contatar por WhatsApp mencionando o último procedimento",
         },
         "MEDIO": {
             "inativo":      "Enviar lembrete de revisão preventiva agendada",
@@ -76,21 +74,8 @@ def gerar_sugestao_acao(score: str, status: str) -> str:
     return mapa.get(status_lower, mapa.get("default", "Manter monitoramento padrão"))
 
 
-def obter_canal_preferido(patient: Patient) -> str:
-    """
-    Determina o canal de comunicação preferido do paciente.
-    Atualmente padrão WhatsApp; pode ser expandido com histórico de resposta.
-    """
-    if patient.phone:
-        return "WhatsApp"
-    return "Email"
-
-
 def calcular_faturamento_potencial(score: str) -> float:
-    """
-    Estima o faturamento potencial médio recuperável por paciente segundo o score.
-    Valores baseados em ticket médio odontológico estimado.
-    """
+    """Estima o faturamento potencial médio recuperável por paciente segundo o score."""
     faturamento = {
         "CRITICO": 850.0,
         "ALTO":    620.0,
@@ -101,29 +86,28 @@ def calcular_faturamento_potencial(score: str) -> float:
 
 
 # ──────────────────────────────────────────────
-# Funções de consulta ao banco de dados
+# Funções de consulta ao banco de dados (Supabase)
 # ──────────────────────────────────────────────
 
-def get_recovery_stats(tenant_id: str, db: Session) -> dict:
-    """
-    Retorna os KPIs de recuperação calculados dinamicamente a partir do banco.
-    """
-    pacientes = db.query(Patient).filter(Patient.tenant_id == tenant_id).all()
+def get_recovery_stats(clinic_id: str) -> dict:
+    """Retorna os KPIs de recuperação calculados dinamicamente no Supabase."""
+    res = supabase.table("patients").select("*").eq("clinic_id", clinic_id).execute()
+    pacientes = res.data or []
 
     if not pacientes:
         return _mock_stats()
 
     total = len(pacientes)
-    criticos = sum(1 for p in pacientes if calcular_score_risco(p.last_visit) == "CRITICO")
-    altos     = sum(1 for p in pacientes if calcular_score_risco(p.last_visit) == "ALTO")
+    criticos = sum(1 for p in pacientes if calcular_score_risco(p["last_visit"]) == "CRITICO")
+    altos     = sum(1 for p in pacientes if calcular_score_risco(p["last_visit"]) == "ALTO")
     em_risco  = criticos + altos
-    inativos  = sum(1 for p in pacientes if p.status == "inativo")
+    inativos  = sum(1 for p in pacientes if p["status"] == "inativo")
 
     taxa_abandono = round((inativos / total) * 100, 1) if total > 0 else 0
 
     faturamento_potencial = sum(
-        calcular_faturamento_potencial(calcular_score_risco(p.last_visit))
-        for p in pacientes if p.status == "inativo"
+        calcular_faturamento_potencial(calcular_score_risco(p["last_visit"]))
+        for p in pacientes if p["status"] == "inativo"
     )
 
     return {
@@ -136,64 +120,38 @@ def get_recovery_stats(tenant_id: str, db: Session) -> dict:
     }
 
 
-def get_priority_patients(tenant_id: str, db: Session, limit: int = 50) -> list[dict]:
-    """
-    Retorna lista de pacientes prioritários para recuperação,
-    ordenados por score de risco (Crítico primeiro).
-    """
-    pacientes = (
-        db.query(Patient)
-        .filter(Patient.tenant_id == tenant_id)
-        .filter(Patient.status.in_(["inativo", "em_recuperacao"]))
-        .all()
-    )
+def get_priority_patients(clinic_id: str, limit: int = 50) -> list[dict]:
+    """Retorna lista de pacientes prioritários para recuperação."""
+    res = supabase.table("patients") \
+        .select("*") \
+        .eq("clinic_id", clinic_id) \
+        .in_("status", ["inativo", "em_recuperacao"]) \
+        .execute()
+    
+    pacientes = res.data or []
 
     resultado = []
     for p in pacientes:
-        score = calcular_score_risco(p.last_visit)
+        score = calcular_score_risco(p["last_visit"])
         prioridade = REGRAS_RISCO.get(score, {}).get("prioridade", 4)
         resultado.append({
-            "id":            str(p.id),
-            "name":          p.name,
-            "phone":         p.phone,
-            "status":        p.status,
-            "last_visit":    p.last_visit.strftime("%d/%m/%Y") if p.last_visit else "Nunca",
+            "id":            str(p["id"]),
+            "name":          p["name"],
+            "phone":         p["phone"],
+            "status":        p["status"],
+            "last_visit":    p["last_visit"] if p["last_visit"] else "Nunca",
             "score":         score,
             "score_label":   REGRAS_RISCO[score]["label"],
             "prioridade":    prioridade,
-            "canal":         obter_canal_preferido(p),
-            "sugestão":      gerar_sugestao_acao(score, p.status),
+            "canal":         "WhatsApp",
+            "sugestão":      gerar_sugestao_acao(score, p["status"]),
             "faturamento_potencial": calcular_faturamento_potencial(score),
-            "notes":         p.notes or "",
+            "notes":         p["notes"] or "",
         })
 
-    # Ordenar por prioridade (Crítico=1 primeiro) e depois por data de last_visit
-    resultado.sort(key=lambda x: (x["prioridade"], x["last_visit"]))
+    resultado.sort(key=lambda x: x["prioridade"])
     return resultado[:limit]
 
-
-def recalcular_scores_tenant(tenant_id: str, db: Session) -> int:
-    """
-    Recalcula e atualiza o status dos pacientes com base no score de risco.
-    Pacientes com score CRITICO ou ALTO e status 'ativo' são marcados como 'inativo'.
-    Retorna o número de pacientes atualizados.
-    """
-    pacientes = db.query(Patient).filter(Patient.tenant_id == tenant_id).all()
-    atualizados = 0
-
-    for p in pacientes:
-        score = calcular_score_risco(p.last_visit)
-        if score in ["CRITICO", "ALTO"] and p.status == "ativo":
-            p.status = "inativo"
-            atualizados += 1
-
-    db.commit()
-    return atualizados
-
-
-# ──────────────────────────────────────────────
-# Fallback com dados de exemplo (quando DB vazio)
-# ──────────────────────────────────────────────
 
 def _mock_stats() -> dict:
     return {

@@ -1,6 +1,9 @@
 import httpx
+import logging
 from typing import Optional, Dict, Any
 from app.core.config import settings
+
+logger = logging.getLogger(__name__)
 
 class EvolutionService:
     """
@@ -14,45 +17,77 @@ class EvolutionService:
             "Content-Type": "application/json"
         }
 
+    async def _request(self, method: str, endpoint: str, json: Optional[Dict] = None) -> Dict[str, Any]:
+        """Método generico para requests."""
+        url = f"{self.base_url}/{endpoint.lstrip('/')}"
+        async with httpx.AsyncClient(timeout=30.0) as client:
+            try:
+                response = await client.request(method, url, json=json, headers=self.headers)
+                response.raise_for_status()
+                return response.json()
+            except httpx.HTTPStatusError as e:
+                logger.error(f"Evolution API Error: {e.response.status_code} - {e.response.text}")
+                return {"error": True, "status": e.response.status_code, "message": e.response.text}
+            except Exception as e:
+                logger.error(f"Evolution API Exception: {str(e)}")
+                return {"error": True, "message": str(e)}
+
+    async def get_instance_status(self, instance_id: str) -> Dict[str, Any]:
+        """Verifica se a instância está conectada."""
+        return await self._request("GET", f"instance/connectionState/{instance_id}")
+
     async def send_text_message(
         self, 
         instance_id: str, 
         number: str, 
-        text: str
-    ) -> Dict[Any, Any]:
+        text: str,
+        delay: int = 1200
+    ) -> Dict[str, Any]:
         """
-        Envia uma mensagem de texto simples.
+        Envia uma mensagem de texto com delay simulando presença humana.
         """
-        url = f"{self.base_url}/message/sendText/{instance_id}"
+        # Formatar número (remover caracteres não numéricos)
+        clean_number = "".join(filter(str.isdigit, number))
         
-        # O número deve estar no formato DDI + DDD + Número (ex: 5511999999999)
         payload = {
-            "number": number,
+            "number": clean_number,
             "options": {
-                "delay": 1200, # Pequeno delay humano (ms)
-                "presence": "composing"
+                "delay": delay,
+                "presence": "composing",
+                "linkPreview": True
             },
             "text": text
         }
+        
+        return await self._request("POST", f"message/sendText/{instance_id}", json=payload)
 
-        async with httpx.AsyncClient() as client:
-            try:
-                response = await client.post(
-                    url, json=payload, headers=self.headers
-                )
-                response.raise_for_status()
-                return response.json()
-            except httpx.HTTPStatusError as e:
-                # Log do erro aqui (importante para LGPD/Auditoria)
-                return {"error": str(e), "status": e.response.status_code}
-            except Exception as e:
-                return {"error": str(e)}
+    async def send_media_message(
+        self,
+        instance_id: str,
+        number: str,
+        media_url: str,
+        caption: str = "",
+        type: str = "image"
+    ) -> Dict[str, Any]:
+        """Envia imagens ou documentos."""
+        clean_number = "".join(filter(str.isdigit, number))
+        payload = {
+            "number": clean_number,
+            "options": {
+                "delay": 1200,
+                "presence": "composing"
+            },
+            "mediaMessage": {
+                "mediatype": type,
+                "caption": caption,
+                "media": media_url
+            }
+        }
+        return await self._request("POST", f"message/sendMedia/{instance_id}", json=payload)
 
-# Injeção de dependência simples para uso nas rotas
 def get_evolution_service() -> EvolutionService:
-    # URL e KEY devem vir do seu .env configurado no Easypanel
+    """Injeção de dependência usando as configurações do sistema."""
     return EvolutionService(
-        base_url=os.getenv("EVOLUTION_URL", "http://evolution:8080"),
-        api_key=os.getenv("EVOLUTION_API_KEY", "SUA_KEY_AQUI")
+        base_url=settings.EVOLUTION_URL,
+        api_key=settings.EVOLUTION_API_KEY
     )
-import os

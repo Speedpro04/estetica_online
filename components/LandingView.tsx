@@ -58,7 +58,7 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnterApp }) => {
             </div>
           </div>
           <div className="hero-img fade-up delay-2">
-            <img src="/imagens/ok.jpg" alt="Clínica Odontológica com Assistente Solara" style={{ height: '480px', objectFit: 'cover', width: '100%' }} loading="lazy" />
+            <img src="/imagens/dent01.png" alt="Clínica Odontológica com Assistente Solara" style={{ height: '480px', objectFit: 'cover', width: '100%' }} loading="lazy" />
             <div className="hero-img-badge">
               <div className="badge-icon">📈</div>
               <div className="badge-text">
@@ -249,7 +249,7 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnterApp }) => {
             </div>
           </div>
           <div className="inteligencia-img">
-            <img src="/imagens/07.jpg" alt="Dentista usando sistema de IA" loading="lazy" />
+            <img src="/imagens/dent02.png" alt="Dentista usando sistema de IA" loading="lazy" />
           </div>
         </div>
       </section>

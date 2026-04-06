@@ -6,8 +6,8 @@ class RedisService:
     Gerenciador de conexões Redis para o Assistente Solara.
     Facilita o uso de filas (Queues) e Cache rápida.
     """
-    def __init__(self, host: str, port: int, db: int = 0):
-        self.r = redis.Redis(host=host, port=port, db=db, decode_responses=True)
+    def __init__(self, redis_url: str):
+        self.r = redis.Redis.from_url(redis_url, decode_responses=True)
 
     def set_value(self, key: str, value: str, expire: int = 3600):
         """
@@ -25,4 +25,4 @@ class RedisService:
         self.r.lpush("campaign_queue", campaign_id)
 
 def get_redis_service() -> RedisService:
-    return RedisService(host=settings.REDIS_HOST, port=settings.REDIS_PORT)
+    return RedisService(redis_url=settings.REDIS_URL)

@@ -13,8 +13,7 @@ class Settings(BaseSettings):
     SUPABASE_SERVICE_KEY: str = ""
 
     # REDIS
-    REDIS_HOST: str = "localhost"
-    REDIS_PORT: int = 6379
+    REDIS_URL: str = "redis://localhost:6379"
 
     # SECURITY
     SECRET_KEY: str = "SECRET_KEY_ALTAMENTE_SEGURA"
@@ -23,6 +22,11 @@ class Settings(BaseSettings):
 
     # GEMINI
     GEMINI_API_KEY: str = ""
+
+    # EVOLUTION API (WhatsApp)
+    EVOLUTION_URL: str = "http://localhost:8080"
+    EVOLUTION_API_KEY: str = ""
+    EVOLUTION_INSTANCE: str = "MainInstance"
 
     # PAGBANK
     PAGBANK_TOKEN: str = ""

@@ -1,5 +1,7 @@
 from fastapi import APIRouter
-from app.api.endpoints import auth, patients, campaigns, chat, recovery, clinics, subscriptions, webhooks
+from app.api.endpoints import (
+    auth, patients, campaigns, chat, recovery, clinics, subscriptions, webhooks, evolution
+)
 
 api_router = APIRouter()
 
@@ -14,6 +16,9 @@ api_router.include_router(subscriptions.router, prefix="/subscriptions", tags=["
 
 # Webhooks (PagSeguro/PagBank — público, sem auth)
 api_router.include_router(webhooks.router, prefix="/webhooks", tags=["webhooks"])
+
+# Evolution API (WhatsApp — público, sem auth via key interna)
+api_router.include_router(evolution.router, prefix="/evolution", tags=["evolution"])
 
 # Módulos do sistema (requer login)
 api_router.include_router(patients.router, prefix="/patients", tags=["patients"])
