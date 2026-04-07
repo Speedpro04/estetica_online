@@ -125,3 +125,17 @@ async def evolution_webhook(request: Request, background_tasks: BackgroundTasks)
         return {"status": "processing"}
 
     return {"status": "ignored", "event": event}
+
+@router.get("/status/{instance_id}")
+async def get_status(instance_id: str):
+    """Retorna o status da conexão da instância."""
+    evo = get_evolution_service()
+    return await evo.get_instance_status(instance_id)
+
+@router.get("/qrcode/{instance_id}")
+async def get_qrcode(instance_id: str):
+    """Retorna o QR Code base64 para conexão."""
+    evo = get_evolution_service()
+    # Assume que o service tem o método _request que pode buscar o qrcode
+    # Endpoint do Evolution API para QR Code base64 costuma ser instance/connect/{instance_id}
+    return await evo._request("GET", f"instance/connect/{instance_id}")
