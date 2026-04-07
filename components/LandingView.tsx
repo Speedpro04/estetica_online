@@ -1,4 +1,3 @@
-
 import React from 'react';
 import './LandingView.css';
 
@@ -9,21 +8,21 @@ interface LandingViewProps {
 const LandingView: React.FC<LandingViewProps> = ({ onEnterApp }) => {
   return (
     <div className="landing-container">
-      {/* NAVBAR */}
+
+      {/* ─── NAVBAR ─── */}
       <nav>
         <a href="#hero" className="nav-logo">
-          <img src="/sol_com_risco_em_baixo-removebg-preview.png" alt="Assistente Solara Logo" style={{ width: '52px', height: '52px' }} />
+          <img src="/sol_com_risco_em_baixo-removebg-preview.png" alt="Solara Connect Logo" style={{ width: '44px', height: '44px' }} />
           <div className="nav-logo-text">
-            <span className="assistente">Assistente</span>
-            <span className="solara">Solara</span>
-            <span className="tagline">IA de Recuperação</span>
+            <span className="assistente">Solara</span>
+            <span className="solara">Connect</span>
+            <span className="tagline">Atendimento Digital</span>
           </div>
         </a>
         <ul className="nav-links">
-          <li><a href="#problema">O Problema</a></li>
+          <li><a href="#problema">Problema</a></li>
           <li><a href="#solucao">Solução</a></li>
           <li><a href="#como-funciona">Como Funciona</a></li>
-          <li><a href="#resultados">Resultados</a></li>
           <li><a href="#precos">Planos</a></li>
           <li>
             <button onClick={onEnterApp} className="btn-nav">
@@ -33,240 +32,423 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnterApp }) => {
         </ul>
       </nav>
 
-      {/* HERO */}
+      {/* ─── HERO ─── */}
       <section id="hero">
         <div className="container hero-grid">
           <div className="hero-content">
-            <div className="hero-label fade-up">🤖 Inteligência Artificial para Odontologia</div>
+            <div className="hero-label fade-up">🏥 Para clínicas que levam o atendimento a sério</div>
             <h1 className="fade-up delay-1">
-              Recupere pacientes que <span>abandonaram tratamentos</span> com inteligência artificial.
+              Solara — a atendente digital que <span>organiza o atendimento</span> da sua clínica.
             </h1>
             <p className="hero-sub fade-up delay-2">
-              O Assistente Solara identifica automaticamente pacientes que não retornaram à clínica e inicia campanhas inteligentes para trazer esses pacientes de volta.
+              O Solara Connect responde pacientes no WhatsApp, agenda consultas, confirma horários e organiza todo o fluxo de atendimento automaticamente — enquanto sua equipe se dedica ao que realmente importa: os pacientes.
             </p>
             <ul className="hero-benefits fade-up delay-3">
-              <li>Identificação automática de pacientes em risco</li>
-              <li>Campanhas inteligentes de recuperação</li>
-              <li>Convites automáticos via WhatsApp</li>
-              <li>Mais pacientes retornando para a clínica</li>
+              <li>Atendimento automático 24h no WhatsApp</li>
+              <li>Agendamento inteligente sem intervenção humana</li>
+              <li>Confirmações e lembretes automáticos</li>
+              <li>Painel completo de gestão em tempo real</li>
             </ul>
             <div className="hero-btns fade-up delay-4">
               <button onClick={onEnterApp} className="btn-primary">
-                🚀 Acessar o Sistema
+                🚀 Agendar Demonstração
               </button>
               <a href="#como-funciona" className="btn-white">Ver como funciona →</a>
             </div>
+            <p className="hero-support-text fade-up">Configuração simples. Sem necessidade de equipe técnica.</p>
           </div>
           <div className="hero-img fade-up delay-2">
-            <img src="/imagens/dent01.png" alt="Clínica Odontológica com Assistente Solara" style={{ height: '480px', objectFit: 'cover', width: '100%' }} loading="lazy" />
-            <div className="hero-img-badge">
-              <div className="badge-icon">📈</div>
-              <div className="badge-text">
-                <strong>+28%</strong>
-                <span>Taxa de recuperação</span>
+            <div className="hero-mockup">
+              <div className="mockup-header">
+                <div className="mockup-dots"><span></span><span></span><span></span></div>
+                <span className="mockup-title">Solara Connect — Painel</span>
+              </div>
+              <div className="mockup-body">
+                <div className="mockup-stat-row">
+                  <div className="mockup-stat"><strong>142</strong><span>Mensagens respondidas</span></div>
+                  <div className="mockup-stat"><strong>98%</strong><span>Confirmações</span></div>
+                  <div className="mockup-stat"><strong>R$&nbsp;12k</strong><span>Receita protegida</span></div>
+                </div>
+                <div className="mockup-kanban">
+                  <div className="kanban-col kanban-triagem">
+                    <div className="kanban-col-title">📥 Triagem</div>
+                    <div className="kanban-card">Ana S. — Implante</div>
+                    <div className="kanban-card">João P. — Retorno</div>
+                  </div>
+                  <div className="kanban-col kanban-aguardando">
+                    <div className="kanban-col-title">⏳ Aguardando</div>
+                    <div className="kanban-card">Maria L. — Consulta</div>
+                  </div>
+                  <div className="kanban-col kanban-finalizado">
+                    <div className="kanban-col-title">✅ Finalizado</div>
+                    <div className="kanban-card">Carlos M. — Check-up</div>
+                    <div className="kanban-card">Rita O. — Canal</div>
+                  </div>
+                </div>
+                <div className="mockup-wpp-row">
+                  <div className="mockup-wpp-indicator">
+                    <span className="wpp-dot"></span>
+                    Solara IA ativa — 3 atendimentos em curso
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* PROBLEMA */}
-      <section id="problema">
-        <div className="container problema-grid">
-          <div className="problema-img">
-            <img src="/imagens/02.jpg" alt="Paciente em consulta odontológica" loading="lazy" />
+      {/* ─── LOGOTIPOS / TRUST BAR ─── */}
+      <section id="trustbar">
+        <div className="container">
+          <div className="trustbar-inner">
+            <span className="trustbar-label">Tecnologia integrada com</span>
+            <div className="trustbar-logos">
+              <div className="trustbar-logo">💬 WhatsApp</div>
+              <div className="trustbar-dot"></div>
+              <div className="trustbar-logo">🗓️ Google Agenda</div>
+              <div className="trustbar-dot"></div>
+              <div className="trustbar-logo">🤖 Gemini AI</div>
+              <div className="trustbar-dot"></div>
+              <div className="trustbar-logo">🔒 LGPD</div>
+              <div className="trustbar-dot"></div>
+              <div className="trustbar-logo">📊 Analytics</div>
+            </div>
           </div>
-          <div>
+        </div>
+      </section>
+
+      {/* ─── PROBLEMA ─── */}
+      <section id="problema" className="section-light">
+        <div className="container">
+          <div className="section-label-centered">
             <div className="section-label">⚠️ O Problema</div>
-            <h2>Clínicas odontológicas perdem pacientes todos os meses.</h2>
-            <p style={{ marginTop: '16px', fontSize: '14px', lineHeight: '1.75' }}>
-              Muitos pacientes iniciam tratamentos e acabam não retornando para consultas de revisão ou continuidade. Sem acompanhamento adequado, a clínica perde oportunidades importantes de faturamento — sem nem perceber.
+          </div>
+          <h2 className="section-heading-center">
+            O atendimento de muitas clínicas ainda depende de mensagens, anotações e improviso.
+          </h2>
+          <div className="problema-cards">
+            <div className="problema-card">
+              <div className="problema-card-icon">📱</div>
+              <h3>Mensagens acumuladas</h3>
+              <p>O WhatsApp da clínica acumula mensagens sem resposta enquanto a equipe tenta dar conta do atendimento presencial.</p>
+            </div>
+            <div className="problema-card">
+              <div className="problema-card-icon">⏳</div>
+              <h3>Pacientes sem resposta</h3>
+              <p>Cada minuto de demora na resposta é uma oportunidade que escorrega silenciosamente para a concorrência.</p>
+            </div>
+            <div className="problema-card">
+              <div className="problema-card-icon">📅</div>
+              <h3>Consultas esquecidas</h3>
+              <p>Agendamentos manuais e sem confirmação automática resultam em faltas e horários que ficam vazios na agenda.</p>
+            </div>
+            <div className="problema-card">
+              <div className="problema-card-icon">📋</div>
+              <h3>Agenda desorganizada</h3>
+              <p>Sem um sistema centralizado, a agenda se transforma em um quebra-cabeça difícil de controlar no dia a dia.</p>
+            </div>
+          </div>
+          <div className="problema-conclusion">
+            <div className="conclusion-text">
+              <p>O problema raramente é falta de pacientes.</p>
+              <p className="conclusion-bold">Na maioria das vezes, é falta de um sistema que organize o atendimento.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SOLUÇÃO ─── */}
+      <section id="solucao" className="section-dark">
+        <div className="container">
+          <div className="section-label-centered">
+            <div className="section-label teal">✅ A Solução</div>
+          </div>
+          <h2 className="section-heading-center light">
+            Foi exatamente para resolver isso que o Solara Connect foi criado.
+          </h2>
+          <p className="section-sub-center">
+            Solara é uma atendente digital inteligente que responde pacientes, organiza agendamentos, confirma consultas e registra todas as interações automaticamente — todos os dias, sem parar.
+          </p>
+          <div className="solucao-features">
+            <div className="solucao-feat">
+              <div className="solucao-feat-number">01</div>
+              <div className="solucao-feat-content">
+                <h3>Atendimento automático no WhatsApp</h3>
+                <p>Pacientes recebem respostas imediatas e orientações iniciais sem precisar aguardar atendimento humano.</p>
+              </div>
+            </div>
+            <div className="solucao-feat">
+              <div className="solucao-feat-number">02</div>
+              <div className="solucao-feat-content">
+                <h3>Agendamento inteligente de consultas</h3>
+                <p>O sistema consulta a agenda da clínica e oferece automaticamente os horários disponíveis para o paciente.</p>
+              </div>
+            </div>
+            <div className="solucao-feat">
+              <div className="solucao-feat-number">03</div>
+              <div className="solucao-feat-content">
+                <h3>Confirmações e lembretes automáticos</h3>
+                <p>Pacientes recebem confirmação e lembretes antes da consulta, ajudando a reduzir faltas significativamente.</p>
+              </div>
+            </div>
+            <div className="solucao-feat">
+              <div className="solucao-feat-number">04</div>
+              <div className="solucao-feat-content">
+                <h3>Painel completo de gestão</h3>
+                <p>Todas as interações, pacientes e consultas ficam organizados em um único painel de controle intuitivo.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── COMO FUNCIONA ─── */}
+      <section id="como-funciona" className="section-light">
+        <div className="container">
+          <div className="section-label-centered">
+            <div className="section-label">⚙️ Como Funciona</div>
+          </div>
+          <h2 className="section-heading-center">
+            Como o Solara Connect organiza o atendimento da sua clínica.
+          </h2>
+          <p className="section-sub-center dark">
+            Processo simples, automático e contínuo — do primeiro contato ao acompanhamento completo.
+          </p>
+          <div className="steps-premium">
+            <div className="step-premium">
+              <div className="step-premium-number">1</div>
+              <div className="step-premium-connector"></div>
+              <div className="step-premium-body">
+                <h3>O paciente entra em contato</h3>
+                <p>O paciente envia uma mensagem pelo WhatsApp da clínica e é atendido imediatamente pela Solara — sem espera, sem fila.</p>
+              </div>
+            </div>
+            <div className="step-premium">
+              <div className="step-premium-number">2</div>
+              <div className="step-premium-connector"></div>
+              <div className="step-premium-body">
+                <h3>O sistema conduz o atendimento</h3>
+                <p>A Solara responde dúvidas iniciais, coleta informações do paciente e apresenta horários disponíveis para agendamento.</p>
+              </div>
+            </div>
+            <div className="step-premium">
+              <div className="step-premium-number">3</div>
+              <div className="step-premium-connector"></div>
+              <div className="step-premium-body">
+                <h3>A consulta é registrada automaticamente</h3>
+                <p>O sistema agenda a consulta, registra o paciente no banco de dados e envia confirmação imediata por WhatsApp.</p>
+              </div>
+            </div>
+            <div className="step-premium">
+              <div className="step-premium-number">4</div>
+              <div className="step-premium-body">
+                <h3>A clínica acompanha tudo no painel</h3>
+                <p>A equipe acompanha agenda, pacientes e atendimentos em um painel simples, visual e organizado em tempo real.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── STATS BANNER ─── */}
+      <section id="stats" className="section-accent">
+        <div className="container">
+          <div className="stats-grid">
+            <div className="stat-item">
+              <strong>-40%</strong>
+              <span>Redução de faltas com lembretes automáticos</span>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <strong>24h</strong>
+              <span>Atendimento ininterrupto via WhatsApp</span>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <strong>98%</strong>
+              <span>Taxa de confirmação de consultas</span>
+            </div>
+            <div className="stat-divider"></div>
+            <div className="stat-item">
+              <strong>3×</strong>
+              <span>Mais capacidade sem aumentar equipe</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── FUNCIONALIDADES ─── */}
+      <section id="funcionalidades" className="section-light">
+        <div className="container">
+          <div className="section-label-centered">
+            <div className="section-label">🛠️ Funcionalidades</div>
+          </div>
+          <h2 className="section-heading-center">
+            Tudo que sua clínica precisa. Em um único sistema.
+          </h2>
+          <div className="feat-grid-premium">
+            <div className="feat-premium-card feat-main">
+              <div className="feat-premium-icon">💬</div>
+              <h3>Atendimento Automático no WhatsApp</h3>
+              <p>Pacientes recebem respostas imediatas 24 horas por dia. A Solara conduz a conversa, coleta dados e agenda — sem intervenção humana.</p>
+              <div className="feat-premium-tag">Core Feature</div>
+            </div>
+            <div className="feat-premium-card">
+              <div className="feat-premium-icon">📅</div>
+              <h3>Agendamento Inteligente</h3>
+              <p>O sistema consulta disponibilidade em tempo real e oferece horários automaticamente ao paciente.</p>
+            </div>
+            <div className="feat-premium-card">
+              <div className="feat-premium-icon">🔔</div>
+              <h3>Lembretes Automáticos</h3>
+              <p>Confirmações e lembretes são enviados no momento certo para reduzir faltas e manter a agenda cheia.</p>
+            </div>
+            <div className="feat-premium-card">
+              <div className="feat-premium-icon">📊</div>
+              <h3>Painel de Gestão</h3>
+              <p>Visão completa de todos os pacientes, atendimentos e métricas de performance em tempo real.</p>
+            </div>
+            <div className="feat-premium-card">
+              <div className="feat-premium-icon">📋</div>
+              <h3>Kanban Visual</h3>
+              <p>Fluxo de atendimento visual com colunas por status: Triagem, Aguardando, Em Atendimento, Finalizado.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SEGURANÇA ─── */}
+      <section id="seguranca" className="section-dark">
+        <div className="container seguranca-layout">
+          <div className="seguranca-content">
+            <div className="section-label teal">🔒 Segurança & LGPD</div>
+            <h2 className="light">Segurança e privacidade no padrão que clínicas precisam.</h2>
+            <p>
+              Todas as informações registradas no Solara Connect são armazenadas em banco de dados seguro, com criptografia e seguindo as diretrizes da LGPD. Os dados dos pacientes são tratados com o nível de segurança exigido para operações clínicas.
             </p>
-            <div className="problema-items">
-              <div className="problema-item"><span className="pi-icon">❌</span> Pacientes que faltam consultas sem aviso</div>
-              <div className="problema-item"><span className="pi-icon">⏳</span> Tratamentos que ficam incompletos ou pausados</div>
-              <div className="problema-item"><span className="pi-icon">📅</span> Agenda com horários vazios frequentes</div>
-              <div className="problema-item"><span className="pi-icon">👥</span> Equipe sem tempo para acompanhar todos os pacientes</div>
+            <div className="seguranca-checklist">
+              <div className="seguranca-check-item">
+                <div className="check-badge">✓</div>
+                <div>
+                  <strong>Criptografia de ponta a ponta</strong>
+                  <span>Toda comunicação entre sistema e paciente é criptografada</span>
+                </div>
+              </div>
+              <div className="seguranca-check-item">
+                <div className="check-badge">✓</div>
+                <div>
+                  <strong>Conformidade total com a LGPD</strong>
+                  <span>Tratamento de dados em conformidade com a legislação brasileira</span>
+                </div>
+              </div>
+              <div className="seguranca-check-item">
+                <div className="check-badge">✓</div>
+                <div>
+                  <strong>Servidores no Brasil</strong>
+                  <span>Dados armazenados localmente com backup diário automatizado</span>
+                </div>
+              </div>
+              <div className="seguranca-check-item">
+                <div className="check-badge">✓</div>
+                <div>
+                  <strong>Controle de acesso por perfil</strong>
+                  <span>Permissões granulares por função dentro da clínica</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="seguranca-visual-premium">
+            <div className="seg-shield-wrap">
+              <div className="seg-shield-glow"></div>
+              <div className="seg-shield-icon">🛡️</div>
+            </div>
+            <div className="seg-badges">
+              <div className="seg-badge"><span>✓</span> LGPD Compliant</div>
+              <div className="seg-badge"><span>✓</span> SSL 256-bit</div>
+              <div className="seg-badge"><span>✓</span> Backup Diário</div>
+              <div className="seg-badge"><span>✓</span> Uptime 99.9%</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* SOLUÇÃO */}
-      <section id="solucao">
+      {/* ─── PERDA DE OPORTUNIDADES ─── */}
+      <section id="perda" className="section-light">
         <div className="container">
-          <div className="solucao-header">
-            <div className="section-label">✅ A Solução</div>
-            <h2>Uma inteligência artificial trabalhando para sua clínica.</h2>
-            <p>O Assistente Solara analisa automaticamente a base de pacientes da clínica, identifica aqueles com maior risco de abandono e cria campanhas inteligentes para trazê-los de volta.</p>
+          <div className="section-label-centered">
+            <div className="section-label">📉 O Custo Real</div>
           </div>
-          <div className="cards-grid">
-            <div className="feat-card">
-              <div className="feat-icon">🔍</div>
-              <h3>Identificação automática de pacientes inativos</h3>
-              <p>A IA analisa toda a base de dados e identifica pacientes em risco de abandono antes que isso aconteça.</p>
-            </div>
-            <div className="feat-card">
-              <div className="feat-icon">📣</div>
-              <h3>Campanhas inteligentes de recuperação</h3>
-              <p>Crie e execute campanhas segmentadas automaticamente, com mensagens personalizadas para cada perfil de paciente.</p>
-            </div>
-            <div className="feat-card">
-              <div className="feat-icon">💬</div>
-              <h3>Convites automáticos para retorno</h3>
-              <p>O sistema envia convites personalizados via WhatsApp, SMS ou e-mail de forma completamente automática.</p>
-            </div>
-            <div className="feat-card">
-              <div className="feat-icon">💰</div>
-              <h3>Aumento do faturamento da clínica</h3>
-              <p>Cada paciente recuperado representa receita real. Acompanhe o faturamento gerado diretamente no painel.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* COMO FUNCIONA */}
-      <section id="como-funciona">
-        <div className="container">
-          <div className="como-header">
-            <div className="section-label teal">⚙️ Como Funciona</div>
-            <h2>Como o Assistente Solara recupera pacientes.</h2>
-            <p>Processo simples, automático e eficiente — do diagnóstico ao retorno do paciente.</p>
-          </div>
-          <div className="steps-grid">
-            <div className="step-card">
-              <div className="step-number">1</div>
-              <h3>Análise dos Dados</h3>
-              <p>A inteligência artificial analisa automaticamente os dados da clínica e o histórico de todos os pacientes.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">2</div>
-              <h3>Identificação de Risco</h3>
-              <p>O sistema identifica e classifica os pacientes com maior risco de abandono de tratamento.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">3</div>
-              <h3>Campanhas Automáticas</h3>
-              <p>Campanhas personalizadas são criadas e enviadas automaticamente para convidar os pacientes a retornar.</p>
-            </div>
-            <div className="step-card">
-              <div className="step-number">4</div>
-              <h3>Pacientes Retornam</h3>
-              <p>Os pacientes voltam à clínica, continuam seus tratamentos e a clínica aumenta seu faturamento.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* DEMO */}
-      <section id="demo">
-        <div className="container">
-          <div className="demo-header">
-            <div className="section-label">🖥️ Demonstração</div>
-            <h2>Veja o Assistente Solara em ação.</h2>
-            <p>Interface limpa e intuitiva com tudo o que sua clínica precisa para recuperar pacientes automaticamente.</p>
-          </div>
-          <div className="demo-grid">
-            <div className="demo-card">
-              <img src="/imagens/06.png" alt="Painel de recuperação de pacientes" style={{ objectFit: 'contain', background: '#f0f4f8' }} loading="lazy" />
-              <div className="demo-card-body">
-                <h3>Painel de Recuperação</h3>
-                <p>Visualize todos os pacientes prioritários, score de risco da IA, histórico de contatos e sugestões automáticas.</p>
+          <h2 className="section-heading-center">
+            Quando o atendimento não é organizado, a clínica perde oportunidades todos os dias.
+          </h2>
+          <div className="perda-vs-layout">
+            <div className="perda-col">
+              <div className="perda-col-header sem-solara">Sem o Solara Connect</div>
+              <div className="perda-item-row">
+                <span className="perda-x">✗</span>
+                <span>Mensagens que ficam sem resposta</span>
+              </div>
+              <div className="perda-item-row">
+                <span className="perda-x">✗</span>
+                <span>Pacientes que desistem de agendar</span>
+              </div>
+              <div className="perda-item-row">
+                <span className="perda-x">✗</span>
+                <span>Consultas esquecidas na agenda</span>
+              </div>
+              <div className="perda-item-row">
+                <span className="perda-x">✗</span>
+                <span>Equipe sobrecarregada com tarefas repetitivas</span>
+              </div>
+              <div className="perda-item-row">
+                <span className="perda-x">✗</span>
+                <span>Faturamento perdido sem rastrear</span>
               </div>
             </div>
-            <div className="demo-card">
-              <img src="/imagens/01.png" alt="Campanhas inteligentes" style={{ objectFit: 'contain', background: '#f0f4f8' }} loading="lazy" />
-              <div className="demo-card-body">
-                <h3>Campanhas Inteligentes</h3>
-                <p>Execute campanhas sugeridas pela IA em poucos cliques. Acompanhe o progresso e os resultados em tempo real.</p>
-              </div>
+            <div className="perda-divider">
+              <div className="perda-divider-line"></div>
+              <div className="perda-divider-vs">VS</div>
+              <div className="perda-divider-line"></div>
             </div>
-            <div className="demo-card">
-              <img src="/imagens/04.png" alt="Acesso ao sistema" style={{ objectFit: 'contain', background: '#f0f4f8' }} loading="lazy" />
-              <div className="demo-card-body">
-                <h3>Acesso Seguro</h3>
-                <p>Login protegido com autenticação de alto nível. Acesse de qualquer dispositivo com segurança total.</p>
+            <div className="perda-col com-solara">
+              <div className="perda-col-header com-solara-header">Com o Solara Connect</div>
+              <div className="perda-item-row">
+                <span className="perda-check">✓</span>
+                <span>Respostas imediatas, atendimento 24h</span>
               </div>
-            </div>
-            <div className="demo-card">
-              <img src="/imagens/05.jpg" alt="Paciente satisfeita" style={{ objectFit: 'cover', height: '220px' }} loading="lazy" />
-              <div className="demo-card-body">
-                <h3>Pacientes Mais Satisfeitos</h3>
-                <p>Com comunicação proativa e personalizada, os pacientes se sentem valorizados e voltam mais motivados.</p>
+              <div className="perda-item-row">
+                <span className="perda-check">✓</span>
+                <span>Agendamento guiado automático via IA</span>
+              </div>
+              <div className="perda-item-row">
+                <span className="perda-check">✓</span>
+                <span>Lembretes automáticos antes da consulta</span>
+              </div>
+              <div className="perda-item-row">
+                <span className="perda-check">✓</span>
+                <span>Equipe focada no atendimento presencial</span>
+              </div>
+              <div className="perda-item-row">
+                <span className="perda-check">✓</span>
+                <span>Faturamento rastreado em tempo real</span>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* RESULTADOS */}
-      <section id="resultados">
+      {/* ─── PREÇOS ─── */}
+      <section id="precos" className="section-dark">
         <div className="container">
-          <div className="resultados-header">
-            <div className="section-label">📊 Resultados</div>
-            <h2>O impacto do Assistente Solara na clínica.</h2>
+          <div className="section-label-centered">
+            <div className="section-label teal">💳 Planos</div>
           </div>
-          <div className="resultados-grid">
-            <div className="result-card">
-              <span className="result-icon">🔄</span>
-              <h3>Mais pacientes retornando</h3>
-              <p>Aumento comprovado na taxa de retorno de pacientes que haviam abandonado tratamentos.</p>
-            </div>
-            <div className="result-card">
-              <span className="result-icon">📅</span>
-              <h3>Agenda mais preenchida</h3>
-              <p>Menos horários vazios e mais consultas realizadas por mês com menos esforço da equipe.</p>
-            </div>
-            <div className="result-card">
-              <span className="result-icon">🦷</span>
-              <h3>Mais tratamentos concluídos</h3>
-              <p>Pacientes voltam e concluem seus tratamentos, gerando mais valor clínico e financeiro.</p>
-            </div>
-            <div className="result-card">
-              <span className="result-icon">💵</span>
-              <h3>Mais faturamento</h3>
-              <p>Cada campanha gera faturamento mensurável. Acompanhe em tempo real o retorno sobre o investimento.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* INTELIGÊNCIA */}
-      <section id="inteligencia">
-        <div className="container inteligencia-grid">
-          <div>
-            <div className="section-label">🧠 Inteligência IA</div>
-            <h2>Uma IA especializada em recuperação de pacientes.</h2>
-            <p style={{ marginTop: '16px', fontSize: '14px', lineHeight: '1.75' }}>
-              O sistema utiliza inteligência artificial para identificar padrões de abandono de tratamento e sugerir ações que aumentam significativamente a chance de retorno dos pacientes. Resultados claros, em tempo real.
-            </p>
-            <div className="kpi-list">
-              <div className="kpi-item"><div className="kpi-dot"></div><span>Taxa de abandono monitorada automaticamente</span></div>
-              <div className="kpi-item"><div className="kpi-dot"></div><span>Pacientes em risco identificados por IA</span></div>
-              <div className="kpi-item"><div className="kpi-dot"></div><span>Convites enviados e rastreados em tempo real</span></div>
-              <div className="kpi-item"><div className="kpi-dot"></div><span>Pacientes recuperados contabilizados</span></div>
-              <div className="kpi-item"><div className="kpi-dot"></div><span>Faturamento recuperado calculado automaticamente</span></div>
-            </div>
-          </div>
-          <div className="inteligencia-img">
-            <img src="/imagens/dent02.png" alt="Dentista usando sistema de IA" loading="lazy" />
-          </div>
-        </div>
-      </section>
-
-      {/* PREÇOS */}
-      <section id="precos">
-        <div className="container">
-          <div className="precos-header">
-            <div className="section-label">💳 Investimento</div>
-            <h2>Planos para Clínicas Odontológicas</h2>
-            <p>Escolha o plano ideal para o tamanho da sua clínica e comece a recuperar pacientes hoje mesmo.</p>
-          </div>
+          <h2 className="section-heading-center light">Planos para clínicas odontológicas.</h2>
+          <p className="section-sub-center">Escolha o plano ideal e comece a organizar o atendimento hoje mesmo.</p>
           <div className="precos-grid">
-            {/* PLANO ESSENCIAL */}
             <div className="preco-card">
               <div className="preco-card-header">
-                <h3>Plano Essencial</h3>
+                <h3>Essencial</h3>
                 <p>Para clínicas pequenas</p>
               </div>
               <div className="preco-valor">
@@ -276,19 +458,17 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnterApp }) => {
               </div>
               <p className="preco-limite">1 a 2 dentistas</p>
               <ul className="preco-features">
-                <li><span>✔</span> Agenda inteligente</li>
-                <li><span>✔</span> Recuperação automática</li>
-                <li><span>✔</span> Confirmação de consultas</li>
-                <li><span>✔</span> Dashboard básico</li>
+                <li><span>✔</span> Atendimento automático WhatsApp</li>
+                <li><span>✔</span> Agendamento inteligente</li>
+                <li><span>✔</span> Confirmações automáticas</li>
+                <li><span>✔</span> Painel de gestão básico</li>
               </ul>
-              <button onClick={onEnterApp} className="btn-secondary w-full">Começar Agora</button>
+              <button onClick={onEnterApp} className="btn-preco-outline">Começar Agora</button>
             </div>
-
-            {/* PLANO PROFISSIONAL */}
             <div className="preco-card popular">
               <div className="badge-popular">MAIS POPULAR</div>
               <div className="preco-card-header">
-                <h3>Plano Profissional</h3>
+                <h3>Profissional</h3>
                 <p>O melhor custo-benefício</p>
               </div>
               <div className="preco-valor">
@@ -299,17 +479,15 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnterApp }) => {
               <p className="preco-limite">3 a 5 dentistas</p>
               <ul className="preco-features">
                 <li><span>✔</span> Tudo do plano Essencial</li>
-                <li><span>✔</span> Campanhas automáticas</li>
-                <li><span>✔</span> Relatórios de faltas</li>
-                <li><span>✔</span> Automação de mensagens</li>
+                <li><span>✔</span> Kanban de gestão visual</li>
+                <li><span>✔</span> Relatórios de NPS e faltas</li>
+                <li><span>✔</span> Integração Solara AI completa</li>
               </ul>
-              <button onClick={onEnterApp} className="btn-primary w-full">Começar Agora</button>
+              <button onClick={onEnterApp} className="btn-preco-primary">Começar Agora</button>
             </div>
-
-            {/* PLANO CLÍNICA */}
             <div className="preco-card">
               <div className="preco-card-header">
-                <h3>Plano Clínica</h3>
+                <h3>Clínica</h3>
                 <p>Para grandes operações</p>
               </div>
               <div className="preco-valor">
@@ -320,73 +498,54 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnterApp }) => {
               <p className="preco-limite">6 a 10 dentistas</p>
               <ul className="preco-features">
                 <li><span>✔</span> Tudo do plano Profissional</li>
-                <li><span>✔</span> Insights da IA Solara</li>
-                <li><span>✔</span> Campanhas avançadas</li>
-                <li><span>✔</span> Prioridade no suporte</li>
+                <li><span>✔</span> Insights avançados de IA</li>
+                <li><span>✔</span> Campanhas automáticas</li>
+                <li><span>✔</span> Suporte prioritário dedicado</li>
               </ul>
-              <button onClick={onEnterApp} className="btn-secondary w-full">Começar Agora</button>
+              <button onClick={onEnterApp} className="btn-preco-outline">Começar Agora</button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA */}
-      <section id="cta">
+      {/* ─── CTA FINAL ─── */}
+      <section id="cta" className="section-cta">
         <div className="container">
-          <div className="cta-inner">
-            <div className="section-label teal" style={{ margin: '0 auto 24px', display: 'table' }}>🚀 Comece Agora</div>
-            <h2>Comece a recuperar pacientes hoje.</h2>
-            <p>Ative o Assistente Solara na sua clínica e permita que a inteligência artificial trabalhe para trazer pacientes de volta automaticamente.</p>
-            <div className="cta-btns">
-              <button onClick={onEnterApp} className="btn-primary">
-                Entrar no Assistente Solara →
+          <div className="cta-box">
+            <div className="cta-glow"></div>
+            <div className="cta-content">
+              <div className="section-label teal" style={{ display: 'inline-flex', marginBottom: '28px' }}>🚀 Pronto para começar?</div>
+              <h2>Veja como o Solara Connect pode transformar o atendimento da sua clínica.</h2>
+              <p>Automatize a comunicação com pacientes, organize sua agenda e acompanhe todo o atendimento em um único sistema.</p>
+              <button onClick={onEnterApp} className="btn-cta-primary">
+                Agendar Demonstração Gratuita →
               </button>
-              <button onClick={onEnterApp} className="btn-white">
-                Começar Agora
-              </button>
-            </div>
-            <div className="cta-stats">
-              <div className="cta-stat">
-                <strong>28%</strong>
-                <span>Taxa de recuperação</span>
-              </div>
-              <div className="cta-stat">
-                <strong>R$ 12.480</strong>
-                <span>Faturamento médio recuperado</span>
-              </div>
-              <div className="cta-stat">
-                <strong>142</strong>
-                <span>Convites automáticos/mês</span>
-              </div>
-              <div className="cta-stat">
-                <strong>24</strong>
-                <span>Pacientes recuperados</span>
-              </div>
+              <span className="cta-sub">Implementação simples e rápida para clínicas.</span>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FOOTER */}
+      {/* ─── FOOTER ─── */}
       <footer>
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="footer-logo">
-              <img src="/sol_com_risco_em_baixo-removebg-preview.png" alt="Assistente Solara Logo" style={{ width: '52px', height: '52px' }} />
+              <img src="/sol_com_risco_em_baixo-removebg-preview.png" alt="Solara Connect Logo" style={{ width: '44px', height: '44px' }} />
               <div className="footer-logo-text">
-                <span className="assistente">Assistente</span>
-                <span className="solara">Solara</span>
+                <span className="assistente">Solara</span>
+                <span className="solara">Connect</span>
               </div>
             </div>
-            <p>IA para recuperação de pacientes em clínicas odontológicas. Tecnologia inteligente a serviço da saúde.</p>
+            <p>Atendente digital inteligente para clínicas. Tecnologia que organiza, automatiza e transforma o atendimento.</p>
           </div>
           <div className="footer-col">
-            <h4>Sistema</h4>
+            <h4>Produto</h4>
             <ul>
-              <li><button onClick={onEnterApp} className="text-left hover:text-[#82ccdd] transition-colors">Login</button></li>
-              <li><a href="#solucao">Funcionalidades</a></li>
+              <li><button onClick={onEnterApp} className="footer-link-btn">Acessar Painel</button></li>
+              <li><a href="#funcionalidades">Funcionalidades</a></li>
               <li><a href="#como-funciona">Como Funciona</a></li>
-              <li><a href="#demo">Demonstração</a></li>
+              <li><a href="#precos">Planos</a></li>
             </ul>
           </div>
           <div className="footer-col">
@@ -394,14 +553,14 @@ const LandingView: React.FC<LandingViewProps> = ({ onEnterApp }) => {
             <ul>
               <li><a href="#">Contato</a></li>
               <li><a href="#">Termos de Uso</a></li>
-              <li><a href="#">Privacidade</a></li>
+              <li><a href="#">Privacidade & LGPD</a></li>
               <li><a href="#">Suporte</a></li>
             </ul>
           </div>
         </div>
         <div className="footer-bottom">
-          <p>© 2025 Assistente Solara. Todos os direitos reservados.</p>
-          <div className="footer-badge">🔒 Criptografia Militar Ativa</div>
+          <p>© 2025 Solara Connect. Todos os direitos reservados.</p>
+          <div className="footer-badge">🔒 LGPD Compliant · Criptografia Ativa</div>
         </div>
       </footer>
     </div>
