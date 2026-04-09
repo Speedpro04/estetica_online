@@ -195,7 +195,7 @@ const App: React.FC = () => {
           </div>
           
           <div className="text-center mb-12">
-            <h1 className="text-white text-4xl font-light tracking-tight mb-4 uppercase leading-none italic">Acesso Solara</h1>
+            <h1 className="text-white text-4xl font-light tracking-tight mb-4 uppercase leading-none italic">Solara Connect</h1>
             <p className="text-[#82ccdd] text-[9px] font-bold uppercase tracking-[0.4em] opacity-60">Gestão Inteligente AXOS HUB</p>
           </div>
 
