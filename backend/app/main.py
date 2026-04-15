@@ -3,6 +3,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.api.api_v1 import api_router
 from app.core.config import settings
 
+from app.services.tasks import test_task
+
 def get_application() -> FastAPI:
     _app = FastAPI(title=settings.PROJECT_NAME, version=settings.VERSION)
 
@@ -27,3 +29,8 @@ def read_root():
 @app.get("/health")
 def health_check():
     return {"status": "healthy", "service": "solara-backend"}
+
+@app.post("/test-celery/{name}")
+def trigger_celery_test(name: str):
+    task = test_task.delay(name)
+    return {"task_id": task.id, "status": "Tarefa enviada para a fila!"}
