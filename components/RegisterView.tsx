@@ -187,7 +187,7 @@ const RegisterView: React.FC<RegisterViewProps> = ({ onBack, onSuccess }) => {
                   <Building2 className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500" size={18} />
                   <input
                     type="text"
-                    placeholder="Ex: Odonto Premium BR"
+                    placeholder="Ex: Estética Premium BR"
                     value={formData.clinic_name}
                     onChange={e => updateField('clinic_name', e.target.value)}
                     required

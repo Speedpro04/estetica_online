@@ -216,7 +216,7 @@ const AgendaView: React.FC<AgendaViewProps> = ({ appointments }) => {
                     className="w-full border border-slate-200 rounded-xl px-5 py-4 text-base font-light text-[#0a3d62] outline-none focus:border-[#7ed6df] transition-all placeholder:text-slate-300"
                     value={form.procedure}
                     onChange={(e) => setForm({ ...form, procedure: e.target.value })}
-                    title="Procedimento odontológico"
+                    title="Procedimento estético"
                   />
                 </div>
               </div>

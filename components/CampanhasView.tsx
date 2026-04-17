@@ -26,7 +26,7 @@ const CampanhasView: React.FC = () => {
 
   const campanhasSugeridas: Campanha[] = [
     {
-      id: 'c1', tipo: 'Revisão Odontológica', pacientes: 12, status: 'sugerida', canal: 'WhatsApp',
+      id: 'c1', tipo: 'Avaliação Estética', pacientes: 12, status: 'sugerida', canal: 'WhatsApp',
       descricao: '12 pacientes estão há mais de 6 meses sem retorno. Alta probabilidade de reengajamento.',
     },
     {
