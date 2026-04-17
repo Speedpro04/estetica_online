@@ -1,0 +1,24 @@
+:80 {
+    # Bloqueia o acesso a arquivos sensíveis ocultos
+    @sensitive {
+        path /.env*
+        path /.git*
+        path /wp-config*
+        path /config.json
+        path /*.sql
+        path /*.bak
+        path /id_rsa
+        path /.aws/*
+        path /.kube/*
+    }
+    respond @sensitive 403
+
+    # Configuração padrão do Nixpacks para Vite/React
+    root * /app/dist
+    
+    # Roteamento SPA
+    try_files {path} /index.html
+    
+    # Servir arquivos estáticos normalmente
+    file_server
+}
