@@ -197,8 +197,8 @@ const App: React.FC = () => {
           </div>
           
           <div className="text-center mb-12">
-            <h1 className="text-white text-4xl font-bold tracking-tight mb-4 uppercase leading-none">Odonto Connect</h1>
-            <p className="text-[#7ed6df] text-[9px] font-bold uppercase tracking-[0.4em] opacity-90">Gestão Inteligente para Clínicas Odontológicas</p>
+            <h1 className="text-white text-4xl font-black tracking-tight mb-4 uppercase leading-none">Solara Estética</h1>
+            <p className="text-[#7ed6df] text-[9px] font-black uppercase tracking-[0.4em] opacity-90">Gestão Inteligente para Centros de Estética Avançada</p>
           </div>
 
           <form onSubmit={handleLogin} className="space-y-5">
@@ -390,8 +390,8 @@ const App: React.FC = () => {
               <Menu size={20} />
             </button>
             <div className="flex flex-col">
-              <h1 className="text-xl font-black text-white tracking-tighter uppercase leading-none">Odonto Connect Dashboard</h1>
-              <p className="text-[9px] font-black text-[#7ed6df] uppercase tracking-[0.3em] mt-2 italic shadow-sm">SaaS especializado para clínicas odontológicas</p>
+              <h1 className="text-xl font-black text-white tracking-tighter uppercase leading-none">Solara Estética Dashboard</h1>
+              <p className="text-[9px] font-black text-[#7ed6df] uppercase tracking-[0.3em] mt-2 italic shadow-sm">SaaS especializado para clínicas de estética avançada</p>
             </div>
           </div>
 

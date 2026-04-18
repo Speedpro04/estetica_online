@@ -65,7 +65,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ leads, appointments, onOp
           </div>
           <h1 className="text-4xl font-black tracking-tighter uppercase leading-none italic mb-4">Métricas Operacionais</h1>
           <p className="text-white/60 text-sm font-medium max-w-xl leading-relaxed">
-            Sua clínica está operando com <span className="text-[#7ed6df] font-black">92% de eficiência</span>. A Odonto AI recuperou 12 pacientes nas últimas 24 horas.
+            Sua clínica está operando com <span className="text-[#7ed6df] font-black">92% de eficiência</span>. A Solara AI recuperou 12 pacientes nas últimas 24 horas.
           </p>
         </div>
         <div className="flex gap-4 relative z-10">
@@ -189,7 +189,7 @@ const DashboardView: React.FC<DashboardViewProps> = ({ leads, appointments, onOp
                 <Zap size={32} className="mb-6 animate-pulse" />
                 <h3 className="text-xl font-black uppercase tracking-tighter italic mb-4">Automação Inteligente</h3>
                 <p className="text-[11px] font-black uppercase tracking-widest leading-loose mb-10 border-l-4 border-[#0a3d62]/20 pl-4">
-                  Sua clínica economizou <span className="text-white font-black underline">42 horas</span> de trabalho manual este mês através dos disparos automáticos da Odonto AI.
+                  Sua clínica economizou <span className="text-white font-black underline">42 horas</span> de trabalho manual este mês através dos disparos automáticos da Solara AI.
                 </p>
                 <button className="w-full py-4 bg-[#0a3d62] text-white rounded-[13px] text-[10px] font-black uppercase tracking-widest shadow-xl shadow-[#0a3d62]/20 hover:scale-[1.02] active:scale-95 transition-all">
                    Ver Relatório Completo
@@ -214,11 +214,11 @@ const DashboardView: React.FC<DashboardViewProps> = ({ leads, appointments, onOp
             
             <div className="flex-1 p-8 space-y-8 overflow-y-auto custom-scrollbar h-full">
                {[
-                 { user: 'Odonto AI', action: 'Lead Recuperado', p: 'Ricardo Mendes', time: 'Há 5 min', color: 'bg-emerald-500' },
+                 { user: 'Solara AI', action: 'Lead Recuperado', p: 'Ricardo Mendes', time: 'Há 5 min', color: 'bg-emerald-500' },
                  { user: 'Sistema', action: 'Agendamento Confirmado', p: 'Sara Oliveira', time: 'Há 12 min', color: 'bg-blue-500' },
-                 { user: 'Odonto AI', action: 'Disparo Automático', p: 'Lista: Inativos 6+', time: 'Há 24 min', color: 'bg-[#7ed6df]' },
+                 { user: 'Solara AI', action: 'Disparo Automático', p: 'Lista: Inativos 6+', time: 'Há 24 min', color: 'bg-[#7ed6df]' },
                  { user: 'Dr. Mendes', action: 'Procedimento Finalizado', p: 'Carlos Ferreira', time: 'Há 1h', color: 'bg-violet-500' },
-                 { user: 'Odonto AI', action: 'NPS Enviado', p: 'Juliana Silva', time: 'Há 1h', color: 'bg-orange-500' },
+                 { user: 'Solara AI', action: 'NPS Enviado', p: 'Juliana Silva', time: 'Há 1h', color: 'bg-orange-500' },
                ].map((log, i) => (
                  <div key={i} className="flex gap-4 relative group cursor-default">
                     {i !== 4 && <div className="absolute left-1.5 top-5 bottom-[-20px] w-0.5 bg-white/5" />}
