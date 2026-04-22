@@ -17,8 +17,7 @@ import {
   DollarSign,
   Sparkles,
   BarChart3,
-  Zap,
-  BrainCircuit
+  Zap
 } from 'lucide-react';
 import { Toaster } from 'react-hot-toast';
 import { useSolaraStore } from './store';
@@ -41,9 +40,7 @@ import SolaraAssistant from './components/SolaraAssistant';
 import LandingView from './components/LandingView';
 import RegisterView from './components/RegisterView';
 import ForgotPasswordView from './components/ForgotPasswordView';
-import SecondBrainView from './components/SecondBrainView';
 import { mockAppointments } from './mockData';
-
 
 // Componente de Badge de Status do Topbar
 const TopStatusBadge: React.FC<{ active?: boolean, label: string, color?: string }> = ({ active, label, color = "bg-green-500" }) => (
@@ -313,9 +310,7 @@ const App: React.FC = () => {
       case 'recovery': return <RecoveryView />;
       case 'campanhas': return <CampanhasView />;
       case 'agenda-analysis': return <AgendaAnalysisView />;
-      case 'second-brain': return <SecondBrainView />;
       default: return <DashboardView leads={leads} appointments={mockAppointments} onOpenLead={setSelectedLeadId} />;
-
     }
   };
 
@@ -355,9 +350,7 @@ const App: React.FC = () => {
             { id: 'automations', icon: Zap, label: 'Automações' },
             { id: 'privacy', icon: ShieldCheck, label: 'Privacidade' },
             { id: 'finance', icon: DollarSign, label: 'Cobranças' },
-            { id: 'second-brain', icon: BrainCircuit, label: 'Second Brain' },
           ].map((item) => (
-
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id as any)}
