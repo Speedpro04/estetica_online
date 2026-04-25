@@ -70,7 +70,11 @@ const RegisterView: React.FC<RegisterViewProps> = ({ onBack, onSuccess }) => {
         throw new Error(data.detail || 'Erro ao cadastrar.');
       }
 
-      setSuccess(true);
+      if (data.checkout_url) {
+        window.location.href = data.checkout_url;
+      } else {
+        setSuccess(true);
+      }
     } catch (err: any) {
       setError(err.message || 'Erro ao cadastrar. Tente novamente.');
     } finally {

